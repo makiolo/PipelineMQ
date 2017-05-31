@@ -6,7 +6,6 @@
 #include <cstring>
 #include "mqtt/client.h"
 
-// const std::string SERVER_ADDRESS { "tcp://m20.cloudmqtt.com:11514" };
 const std::string SERVER_ADDRESS { "tcp://localhost:11514" };
 const std::string CLIENT_ID { "sync_publish_cpp" };
 const std::string TOPIC { "hello" };
