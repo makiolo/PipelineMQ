@@ -55,8 +55,7 @@ install:
   - pip install --user pyyaml
   - pip install --user poster
   - pip install --user codecov
-  - bash <(curl -shttps://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.sh)
+  - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.sh)
 
 script:
   - ./cmaki/run.sh
-
