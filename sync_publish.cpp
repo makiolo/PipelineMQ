@@ -4,7 +4,12 @@
 #include <map>
 #include <vector>
 #include <cstring>
-#include "mqtt/client.h"
+#include <mqtt/client.h>
+#include <gmock/gmock.h>
+
+using testing::AtLeast;
+using testing::AnyNumber;
+using testing::_;
 
 const std::string SERVER_ADDRESS { "tcp://localhost:11514" };
 const std::string CLIENT_ID { "sync_publish_cpp" };
@@ -120,7 +125,9 @@ public:
 
 // --------------------------------------------------------------------------
 
-int main(int argc, char* argv[])
+class PublishTests : testing::Test { };
+
+TEST(PublishTests, TestSync)
 {
 	std::cout << "Initialzing..." << std::endl;
 	sample_mem_persistence persist;
@@ -134,7 +141,8 @@ int main(int argc, char* argv[])
 	connOpts.set_clean_session(true);
 	std::cout << "...OK" << std::endl;
 
-	try {
+	try
+	{
 		std::cout << "\nConnecting..." << std::endl;
 		client.connect(connOpts);
 		std::cout << "...OK" << std::endl;
@@ -164,17 +172,16 @@ int main(int argc, char* argv[])
 		client.disconnect();
 		std::cout << "...OK" << std::endl;
 	}
-	catch (const mqtt::persistence_exception& exc) {
+	catch (const mqtt::persistence_exception& exc)
+	{
 		std::cerr << "Persistence Error: " << exc.what() << " ["
 			<< exc.get_reason_code() << "]" << std::endl;
-		return 1;
 	}
-	catch (const mqtt::exception& exc) {
+	catch (const mqtt::exception& exc)
+	{
 		std::cerr << exc.what() << std::endl;
-		return 1;
 	}
 
 	std::cout << "\nExiting" << std::endl;
- 	return 0;
 }
 
