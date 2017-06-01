@@ -9,6 +9,8 @@ gcc 4.9 / clang 3.6: [![Build Status](https://travis-ci.org/makiolo/PipelineMQ.s
 
 # How compile
 ```bash
+git clone https://github.com/makiolo/PipelineMQ.git
+cd PipelineMQ
 bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.sh)
 ./cmaki/setup.sh
 ./cmaki/compile.sh
