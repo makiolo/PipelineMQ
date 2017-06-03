@@ -56,11 +56,6 @@ public:
 		//_r.powerUp();                        //Power up the radio
 	}
 
-	void send_message_unsafe(const char* message)
-	{
-		_r.write(message, sizeof(message));
-	}
-
 	auto get()
 	{
 		std::tuple<std::string, std::string, float> tpl;
@@ -92,7 +87,7 @@ public:
 					}
 					else
 					{
-						std::cout << "invalid " << location << " / " << sensor << " / " << value << std::endl;
+						std::cerr << "invalid " << location << " / " << sensor << " / " << value << std::endl;
 					}
 				}
 				catch(std::out_of_range& e)
@@ -120,7 +115,7 @@ public:
 		: _client("tcp://localhost:1883", "receiver")
 	{
 		mqtt::connect_options connOpts;
-		connOpts.set_keep_alive_interval(20);
+		connOpts.set_keep_alive_interval(120);
 		connOpts.set_clean_session(true);
 		_client.connect(connOpts);
 	}
@@ -181,15 +176,15 @@ int main(int argc, char const* argv[])
 			const std::string& sensor = std::get<1>(tpl);
 			float value = std::get<2>(tpl);
 
-			// publush on MYSQL async
-			// async_buffer.push_back( std::async(std::launch::async, publish_mysql, location, sensor, value) );
-			publish_mysql(location, sensor, value);
-
 			// publish on MQTT sync with QOS=0
 			std::stringstream topic, payload;
 			topic << "/domotica/" << location << "/" << sensor;
 			payload << value;
 			client.publish(topic.str(), payload.str());
+
+			// publush on MYSQL async
+			// async_buffer.push_back( std::async(std::launch::async, publish_mysql, location, sensor, value) );
+			publish_mysql(location, sensor, value);
 		}
 	}
 	catch (const mqtt::exception& exc)
