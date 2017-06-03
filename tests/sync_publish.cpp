@@ -11,9 +11,9 @@ using testing::AtLeast;
 using testing::AnyNumber;
 using testing::_;
 
-const std::string SERVER_ADDRESS { "tcp://localhost:11514" };
+const std::string SERVER_ADDRESS { "tcp://localhost:1883" };
 const std::string CLIENT_ID { "sync_publish_cpp" };
-const std::string TOPIC { "hello" };
+const std::string TOPIC { "/domotica/salon/temperature" };
 
 const std::string PAYLOAD1 { "Hello World!" };
 

@@ -7,4 +7,11 @@ cmaki_setup()
 
 cmaki_find_package(paho-mqtt3)
 cmaki_find_package(paho-mqttpp3)
-cmaki2_gtest(sync_publish sync_publish.cpp PTHREADS)
+
+find_library(RF24_LIBRARY rf24-bcm)
+if(RF24_LIBRARY_NOTFOUND)
+	message(FATAL_ERROR "rf24 not found: ${RF24_LIBRARY}")
+endif()
+cmaki2_executable(receiver receiver.cpp PTHREADS DEPENDS ${RF24_LIBRARY})
+add_subdirectory(tests)
+
