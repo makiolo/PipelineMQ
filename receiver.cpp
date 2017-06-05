@@ -1,13 +1,13 @@
 #include <iostream>
 #include <sstream>
-#include <future>
 #include <boost/algorithm/string.hpp>
+#include <future>
 #include <boost/circular_buffer.hpp>
 // consume radio
 #include <RF24/RF24.h>
 // produce mqtt
 #include <mqtt/client.h>
-// also produce in mysql for persistence
+// produce in mysql for persistence
 #include <boost/scoped_ptr.hpp>
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
@@ -74,11 +74,11 @@ public:
 					const std::string& location = strs.at(0);
 					const std::string& sensor = strs.at(1);
 					float value = std::stof(strs.at(2));
-					if(		(location == "salon" || location == "habita") 
-							&&
-							(sensor == "humidity" || sensor == "temperature" || sensor == "presence_1" || sensor == "presence_2" || sensor == "presence_3")
-							&&
-							((0.0 <= value) && (value <= 100.0))	)
+					if(	(location == "salon" || location == "habita") 
+						&&
+						(sensor == "humidity" || sensor == "temperature" || sensor == "presence_1" || sensor == "presence_2" || sensor == "presence_3")
+						&&
+						((0.0 <= value) && (value <= 100.0)))
 					{
 						std::get<0>(tpl) = location;
 						std::get<1>(tpl) = sensor;
@@ -125,29 +125,30 @@ public:
 		_client.disconnect();
 	}
 
-	void publish(const std::string& topic, const std::string& payload)
+	void publish(const std::string& location, const std::string& sensor, float value)
 	{
-		_client.publish(mqtt::message(topic, payload, 0, false));
+		std::stringstream topic, payload;
+		topic << "/domotica/" << location << "/" << sensor;
+		payload << value;
+		_client.publish(mqtt::message(topic.str(), payload.str(), 1, false));
 	}
 protected:
 	mqtt::client _client;
 };
 
-void publish_mysql(const std::string& location, const std::string& sensor, float value)
+void mysql_publish(const std::string& location, const std::string& sensor, float value)
 {
-	const int cooldown = 5;
+	const int cooldown = 2;
 	std::stringstream ss;
 	ss << "select count(*) as cont from measures where ";
 	ss << "location = " << "'" << location << "'" << " AND ";
 	ss << "sensor = " << "'" << sensor << "'" << " AND ";
 	ss << "value = " << "'" << value << "'" << " AND ";
 	ss << "DATE_SUB(NOW(), INTERVAL " << cooldown << " SECOND) < time";
-	//
 	sql::Driver* driver = sql::mysql::get_driver_instance();
 	boost::scoped_ptr<sql::Connection> con(driver->connect("localhost", "domotica", ""));
 	con->setSchema("domotica");
 	boost::scoped_ptr< sql::Statement > stmt(con->createStatement());
-	//
 	boost::scoped_ptr< sql::ResultSet > res(stmt->executeQuery(ss.str()));
 	if(res->next() && res->getInt("cont") <= 0)
 	{
@@ -171,20 +172,18 @@ int main(int argc, char const* argv[])
 		// boost::circular_buffer<std::future<void> > async_buffer(12);
 		while(true)
 		{
+			// read from radio
 			auto tpl = r.get();
 			const std::string& location = std::get<0>(tpl);
 			const std::string& sensor = std::get<1>(tpl);
 			float value = std::get<2>(tpl);
 
-			// publish on MQTT sync with QOS=0
-			std::stringstream topic, payload;
-			topic << "/domotica/" << location << "/" << sensor;
-			payload << value;
-			client.publish(topic.str(), payload.str());
+			// write on MQTT sync with QOS=1
+			client.publish(location, sensor, value);
 
-			// publush on MYSQL async
-			// async_buffer.push_back( std::async(std::launch::async, publish_mysql, location, sensor, value) );
-			publish_mysql(location, sensor, value);
+			// write on MYSQL async
+			// async_buffer.push_back( std::async(std::launch::async, mysql_publish, location, sensor, value) );
+			mysql_publish(location, sensor, value);
 		}
 	}
 	catch (const mqtt::exception& exc)
@@ -197,4 +196,3 @@ int main(int argc, char const* argv[])
 	}
 	return 0;
 }
-
