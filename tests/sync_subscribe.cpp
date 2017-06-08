@@ -1,34 +1,3 @@
-// sync_subscribe.cpp
-//
-// This is a Paho MQTT C++ client, sample application.
-//
-// This application is an MQTT subscriber using the C++ synchronous client
-// interface, but employs callbacks to receive messages.
-//
-// The sample demonstrates:
-//  - Connecting to an MQTT server/broker.
-//  - Subscribing to a topic
-//  - Receiving messages through the callback API
-//  - Automatic reconnects.
-//  - Using a persistent (non-clean) session
-//
-
-/*******************************************************************************
- * Copyright (c) 2017 Frank Pagliughi <fpagliughi@mindspring.com>
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v1.0 which accompany this distribution.
- *
- * The Eclipse Public License is available at
- *    http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at
- *   http://www.eclipse.org/org/documents/edl-v10.php.
- *
- * Contributors:
- *    Frank Pagliughi - initial implementation and documentation
- *******************************************************************************/
-
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -36,7 +5,12 @@
 #include <cctype>
 #include <thread>
 #include <chrono>
-#include "mqtt/client.h"
+#include <mqtt/client.h>
+#include <gmock/gmock.h>
+
+using testing::AtLeast;
+using testing::AnyNumber;
+using testing::_;
 
 const std::string SERVER_ADDRESS("tcp://localhost:1883");
 const std::string CLIENT_ID("sync_subcribe_cpp");
@@ -84,7 +58,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char* argv[])
+class SubscribeTests : testing::Test { };
+
+TEST(SubscribeTests, TestSync)
 {
 	mqtt::connect_options connOpts;
 	connOpts.set_keep_alive_interval(20);
@@ -107,7 +83,7 @@ int main(int argc, char* argv[])
 	catch (const mqtt::exception& exc) {
 		std::cerr << "\nERROR: Unable to connect to MQTT server: '"
 			<< SERVER_ADDRESS << "'" << std::endl;
-		return 1;
+		return;
 	}
 
 	// Just block till user tells us to quit.
@@ -124,8 +100,6 @@ int main(int argc, char* argv[])
 	}
 	catch (const mqtt::exception& exc) {
 		std::cerr << exc.what() << std::endl;
-		return 1;
+		return;
 	}
-
- 	return 0;
 }
