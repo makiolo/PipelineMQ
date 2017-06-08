@@ -1,7 +1,6 @@
 # PipelineMQ
 
 Playing with MQTT.
-Example compiled with cmaki (https://github.com/eclipse/paho.mqtt.cpp/blob/master/src/samples/sync_publish.cpp)
 
 Coverage: [![codecov](https://codecov.io/gh/makiolo/PipelineMQ/branch/master/graph/badge.svg)](https://codecov.io/gh/makiolo/PipelineMQ)
 
