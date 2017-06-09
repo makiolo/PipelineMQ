@@ -125,7 +125,7 @@ public:
 		_client.disconnect();
 	}
 
-	void publish(const std::string& location, const std::string& sensor, float value)
+	void publish(std::string location, std::string sensor, float value)
 	{
 		std::stringstream topic, payload;
 		topic << "/domotica/" << location << "/" << sensor;
@@ -136,7 +136,7 @@ protected:
 	mqtt::client _client;
 };
 
-void mysql_publish(const std::string& location, const std::string& sensor, float value)
+void mysql_publish(std::string location, std::string sensor, float value)
 {
 	const int cooldown = 2;
 	std::stringstream ss;
@@ -169,7 +169,7 @@ int main(int argc, char const* argv[])
 	mqtt_client client;
 	try
 	{
-		// boost::circular_buffer<std::future<void> > async_buffer(12);
+		boost::circular_buffer<std::future<void> > async_buffer(16);
 		while(true)
 		{
 			// read from radio
@@ -179,11 +179,10 @@ int main(int argc, char const* argv[])
 			float value = std::get<2>(tpl);
 
 			// write on MQTT sync with QOS=1
-			client.publish(location, sensor, value);
+			async_buffer.push_back( std::async(std::launch::async, std::bind(&mqtt_client::publish, client), location, sensor, value) );
 
 			// write on MYSQL async
-			// async_buffer.push_back( std::async(std::launch::async, mysql_publish, location, sensor, value) );
-			mysql_publish(location, sensor, value);
+			async_buffer.push_back( std::async(std::launch::async, mysql_publish, location, sensor, value) );
 		}
 	}
 	catch (const mqtt::exception& exc)
