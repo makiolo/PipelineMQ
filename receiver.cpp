@@ -17,10 +17,10 @@
 #include <mysql_connection.h>
 #include <mysql_driver.h>
 
-class radio
+class radio_server
 {
 public:
-	explicit radio()
+	explicit radio_server()
 		: _r(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ)
 	{
 		radio_begin();
@@ -141,18 +141,19 @@ class mysql_client
 {
 public:
 	explicit mysql_client()
-		: con(sql::mysql::get_driver_instance()->connect("localhost", "domotica", ""))
 	{
-		con->setSchema("domotica");
+		;
 	}
 
 	~mysql_client()
 	{
-		
+		;
 	}
 	
 	void publish(std::time_t current_timestamp, std::string location, std::string sensor, float value)
 	{
+		boost::scoped_ptr<sql::Connection> con(sql::mysql::get_driver_instance()->connect("localhost", "domotica", ""));
+		con->setSchema("domotica");
 		const int cooldown = 1;
 		std::stringstream ss;
 		ss << "select count(*) as cont from measures where ";
@@ -171,38 +172,34 @@ public:
 			ss << "'" << location << "', "; // location
 			ss << "'" << sensor << "', "; // sensor
 			ss << "'" << value << "', "; // value
-			ss << "'" << current_timestamp << "')"; // time
+			ss << "CURRENT_TIMESTAMP)"; // time
 			stmt->execute(ss.str());
 		}
 	}
-protected:
-	boost::scoped_ptr<sql::Connection> con;
 };
 
 int main(int argc, char const* argv[])
 {
-	// rename radio_server
-	radio r;
-	mqtt_client client;
+	radio_server radio;
+	mqtt_client mqtt;
 	mysql_client mysql;
 	try
 	{
 		boost::circular_buffer< std::future<void> > mqtt_buffer(16);
-		boost::circular_buffer< std::future<void> > mysql_buffer(8);
 		while(true)
 		{
 			// read from radio
-			auto tpl = r.get();
+			auto tpl = radio.get();
 			std::time_t current_timestamp = std::time(nullptr);
 			const std::string& location = std::get<0>(tpl);
 			const std::string& sensor = std::get<1>(tpl);
 			float value = std::get<2>(tpl);
 
-			// write on MQTT sync with QOS=1
-			mqtt_buffer.push_back( std::async(std::launch::async, std::bind(&mqtt_client::publish, client), current_timestamp, location, sensor, value) );
+			// write on MQTT async with QOS=1
+			mqtt_buffer.push_back( std::async(std::launch::async, std::bind(&mqtt_client::publish, &mqtt, current_timestamp, location, sensor, value)));
 
-			// write on MYSQL async
-			mysql_buffer.push_back( std::async(std::launch::async, std::bind(&mysql_client::publish, mysql), current_timestamp, location, sensor, value) );
+			// write on MYSQL sync (library is not reentrant)
+			mysql.publish(current_timestamp, location, sensor, value);
 		}
 	}
 	catch (const mqtt::exception& exc)
@@ -215,3 +212,4 @@ int main(int argc, char const* argv[])
 	}
 	return 0;
 }
+
