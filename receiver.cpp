@@ -2,8 +2,7 @@
 #include <sstream>
 #include <ctime>
 #include <boost/algorithm/string.hpp>
-#include <future>
-#include <boost/circular_buffer.hpp>
+#include <stdexcept>
 // consume radio
 #include <RF24/RF24.h>
 // produce mqtt
@@ -48,8 +47,8 @@ public:
 		_r.begin();                           // Setup and configure rf radio 
 		_r.setPALevel(RF24_PA_HIGH);
 		_r.setDataRate(RF24_2MBPS);  
-		//_r.setDataRate(RF24_250KBPS); // Fast enough.. Better range
-		//_r.setPALevel(RF24_PA_LOW);
+		// _r.setDataRate(RF24_250KBPS); // Fast enough.. Better range
+		// _r.setPALevel(RF24_PA_LOW);
 		_r.setAutoAck(1);                     // Ensure autoACK is enabled  
 		_r.setRetries(15, 15);                  // Optionally, increase the delay between retries. Want the number of auto-retries as high as possible (15)  
 		_r.setCRCLength(RF24_CRC_16);         // Set CRC length to 16-bit to ensure quality of data  
@@ -66,7 +65,9 @@ public:
 			if(_r.available())
 			{
 				char data[32];
+				std::cout << "radio begin" << std::endl;
 				_r.read(&data, sizeof(data));
+				std::cout << "radio end" << std::endl;
 				std::string d(data);
 				try
 				{
@@ -89,15 +90,18 @@ public:
 					else
 					{
 						std::cerr << "invalid " << location << " / " << sensor << " / " << value << std::endl;
+						throw std::runtime_error("invalid input in radio");
 					}
 				}
 				catch(std::out_of_range& e)
 				{
 					std::cerr << "error parsing: " << d << std::endl;
+					throw std::runtime_error("error parsing radio");
 				}
 			}
 			else
 			{
+				std::cout << "waiting" << std::endl;
 				delay(10);
 			}
 		}
@@ -118,6 +122,7 @@ public:
 		mqtt::connect_options connOpts;
 		connOpts.set_keep_alive_interval(120);
 		connOpts.set_clean_session(true);
+		connOpts.set_automatic_reconnect(true);
 		_client.connect(connOpts);
 	}
 
@@ -131,7 +136,11 @@ public:
 		std::stringstream topic, payload;
 		topic << "/domotica/" << location << "/" << sensor;
 		payload << current_timestamp << "/" << value;
+		std::cout << "topic: " << topic.str() << std::endl;
+		std::cout << "payload: " << payload.str() << std::endl;
+		std::cout << "begin mqtt" << std::endl;
 		_client.publish(mqtt::message(topic.str(), payload.str(), 1, false));
+		std::cout << "end mqtt" << std::endl;
 	}
 protected:
 	mqtt::client _client;
@@ -166,6 +175,7 @@ public:
 		boost::scoped_ptr< sql::ResultSet > res(stmt->executeQuery(ss.str()));
 		if(res->next() && res->getInt("cont") <= 0)
 		{
+			std::cout << "begin mysql" << std::endl;
 			ss.str("");
 			ss << "insert into measures (id, location, sensor, value, time) VALUES (";
 			ss << "NULL, "; // id
@@ -174,6 +184,7 @@ public:
 			ss << "'" << value << "', "; // value
 			ss << "CURRENT_TIMESTAMP)"; // time
 			stmt->execute(ss.str());
+			std::cout << "end mysql" << std::endl;
 		}
 	}
 };
@@ -183,32 +194,18 @@ int main(int argc, char const* argv[])
 	radio_server radio;
 	mqtt_client mqtt;
 	mysql_client mysql;
-	try
+	while(true)
 	{
-		boost::circular_buffer< std::future<void> > mqtt_buffer(16);
-		while(true)
-		{
-			// read from radio
-			auto tpl = radio.get();
-			std::time_t current_timestamp = std::time(nullptr);
-			const std::string& location = std::get<0>(tpl);
-			const std::string& sensor = std::get<1>(tpl);
-			float value = std::get<2>(tpl);
-
-			// write on MQTT async with QOS=1
-			mqtt_buffer.push_back( std::async(std::launch::async, std::bind(&mqtt_client::publish, &mqtt, current_timestamp, location, sensor, value)));
-
-			// write on MYSQL sync (library is not reentrant)
-			mysql.publish(current_timestamp, location, sensor, value);
-		}
-	}
-	catch (const mqtt::exception& exc)
-	{
-		std::cerr << exc.what() << std::endl;
-	}
-	catch (const std::exception& exc)
-	{
-		std::cerr << exc.what() << std::endl;
+		// read from radio
+		auto tpl = radio.get();
+		std::time_t current_timestamp = std::time(nullptr);
+		const std::string& location = std::get<0>(tpl);
+		const std::string& sensor = std::get<1>(tpl);
+		float value = std::get<2>(tpl);
+		std::cout << "." << std::endl;
+		// write
+		mqtt.publish(current_timestamp, location, sensor, value);
+		mysql.publish(current_timestamp, location, sensor, value);
 	}
 	return 0;
 }
