@@ -9,12 +9,6 @@
 #include <mqtt/client.h>
 // produce in mysql for persistence
 #include <boost/scoped_ptr.hpp>
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <mysql_connection.h>
-#include <mysql_driver.h>
 
 class radio_server
 {
@@ -65,9 +59,7 @@ public:
 			if(_r.available())
 			{
 				char data[32];
-				std::cout << "radio begin" << std::endl;
 				_r.read(&data, sizeof(data));
-				std::cout << "radio end" << std::endl;
 				std::string d(data);
 				try
 				{
@@ -101,7 +93,6 @@ public:
 			}
 			else
 			{
-				std::cout << "waiting" << std::endl;
 				delay(10);
 			}
 		}
@@ -117,7 +108,7 @@ class mqtt_client
 {
 public:
 	explicit mqtt_client()
-		: _client("tcp://localhost:1883", "receiver")
+		: _client("tcp://192.168.1.4:1883", "receiver")
 	{
 		mqtt::connect_options connOpts;
 		connOpts.set_keep_alive_interval(120);
@@ -136,64 +127,16 @@ public:
 		std::stringstream topic, payload;
 		topic << "/domotica/" << location << "/" << sensor;
 		payload << current_timestamp << "/" << value;
-		std::cout << "topic: " << topic.str() << std::endl;
-		std::cout << "payload: " << payload.str() << std::endl;
-		std::cout << "begin mqtt" << std::endl;
 		_client.publish(mqtt::message(topic.str(), payload.str(), 1, false));
-		std::cout << "end mqtt" << std::endl;
 	}
 protected:
 	mqtt::client _client;
-};
-
-class mysql_client
-{
-public:
-	explicit mysql_client()
-	{
-		;
-	}
-
-	~mysql_client()
-	{
-		;
-	}
-	
-	void publish(std::time_t current_timestamp, std::string location, std::string sensor, float value)
-	{
-		boost::scoped_ptr<sql::Connection> con(sql::mysql::get_driver_instance()->connect("localhost", "domotica", ""));
-		con->setSchema("domotica");
-		const int cooldown = 1;
-		std::stringstream ss;
-		ss << "select count(*) as cont from measures where ";
-		ss << "location = " << "'" << location << "'" << " AND ";
-		ss << "sensor = " << "'" << sensor << "'" << " AND ";
-		ss << "value = " << "'" << value << "'" << " AND ";
-		ss << "DATE_SUB(NOW(), INTERVAL " << cooldown << " SECOND) < time";
-		
-		boost::scoped_ptr< sql::Statement > stmt(con->createStatement());
-		boost::scoped_ptr< sql::ResultSet > res(stmt->executeQuery(ss.str()));
-		if(res->next() && res->getInt("cont") <= 0)
-		{
-			std::cout << "begin mysql" << std::endl;
-			ss.str("");
-			ss << "insert into measures (id, location, sensor, value, time) VALUES (";
-			ss << "NULL, "; // id
-			ss << "'" << location << "', "; // location
-			ss << "'" << sensor << "', "; // sensor
-			ss << "'" << value << "', "; // value
-			ss << "CURRENT_TIMESTAMP)"; // time
-			stmt->execute(ss.str());
-			std::cout << "end mysql" << std::endl;
-		}
-	}
 };
 
 int main(int argc, char const* argv[])
 {
 	radio_server radio;
 	mqtt_client mqtt;
-	mysql_client mysql;
 	while(true)
 	{
 		// read from radio
@@ -202,10 +145,8 @@ int main(int argc, char const* argv[])
 		const std::string& location = std::get<0>(tpl);
 		const std::string& sensor = std::get<1>(tpl);
 		float value = std::get<2>(tpl);
-		std::cout << "." << std::endl;
-		// write
 		mqtt.publish(current_timestamp, location, sensor, value);
-		mysql.publish(current_timestamp, location, sensor, value);
+		delay(20);
 	}
 	return 0;
 }
