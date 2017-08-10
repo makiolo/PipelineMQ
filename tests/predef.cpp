@@ -106,6 +106,7 @@ TEST(PublishTests, TestSync)
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
 #elif BOOST_OS_LINUX
+	// use __GLIBC__ and __GLIBC_MINOR__ ? for detect binary compatibility
 	#define OPERATIVE_SYSTEM "linux"
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
@@ -134,7 +135,7 @@ TEST(PublishTests, TestSync)
 		#elif _MSC_VER == 1310
 			#define COMPILER "msvc2003"
 		#else
-			#define COMPILER "msvc"
+			#define COMPILER "unknown_compiler"
 		#endif
 	#elif BOOST_COMP_GNUC
 		#define COMPILER "gcc"
@@ -167,5 +168,5 @@ TEST(PublishTests, TestSync)
 	#define ARCHITECTURE "unknown_arch"
 #endif
 	
-	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << std::endl;
+	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << getenv("MODE") << std::endl;
 }
