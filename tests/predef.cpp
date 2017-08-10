@@ -86,7 +86,11 @@ TEST(PublishTests, TestSync)
 #else
 	#define ARCHITECTURE "unknown_arch"
 #endif
-	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << tolower(getenv("MODE")) << std::endl;
+	// environment var MODE to lower
+	std::string data(getenv("MODE")); 
+	std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+	// print uuid
+	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << data << std::endl;
 }
 
 /*
