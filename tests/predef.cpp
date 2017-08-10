@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <cstring>
+#include <cctype>
 #include <boost/predef.h>
 #include <gmock/gmock.h>
 
@@ -13,6 +14,80 @@
 #define STR(x) STR_HELPER(x)
 
 class PublishTests : testing::Test { };
+
+TEST(PublishTests, TestSync)
+{
+#if BOOST_OS_WINDOWS
+	#define OPERATIVE_SYSTEM "windows"
+#elif BOOST_OS_ANDROID
+	#define OPERATIVE_SYSTEM "android"
+#elif BOOST_OS_LINUX
+	#ifdef __GLIBC__
+		#define OPERATIVE_SYSTEM "linux_glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
+	#else
+		#define OPERATIVE_SYSTEM "linux"
+	#endif
+#elif BOOST_OS_MACOS
+	#define OPERATIVE_SYSTEM "macosx"
+#else
+	#define OPERATIVE_SYSTEM "unknown_so"
+#endif
+
+#if BOOST_OS_WINDOWS
+	#ifdef _MSC_VER
+		#if _MSC_VER == 1911
+			#define COMPILER "msvc2017"
+		#elif _MSC_VER == 1910
+			#define COMPILER "msvc2017"
+		#elif _MSC_VER == 1900
+			#define COMPILER "msvc2015"
+		#elif _MSC_VER == 1800
+			#define COMPILER "msvc2013"
+		#elif _MSC_VER == 1700
+			#define COMPILER "msvc2012"
+		#elif _MSC_VER == 1600
+			#define COMPILER "msvc2010"
+		#elif _MSC_VER == 1500
+			#define COMPILER "msvc2008"
+		#elif _MSC_VER == 1400
+			#define COMPILER "msvc2005"
+		#elif _MSC_VER == 1310
+			#define COMPILER "msvc2003"
+		#else
+			#define COMPILER "unknown_compiler"
+		#endif
+	#elif BOOST_COMP_GNUC
+		#define COMPILER "gcc"
+	#elif BOOST_COMP_CLANG
+		#define COMPILER "clang"
+	#else
+		#define COMPILER "unknown_compiler"
+	#endif
+#else
+	#if BOOST_COMP_GNUC
+		#define COMPILER "gcc"
+	#elif BOOST_COMP_CLANG
+		#define COMPILER "clang"
+	#else
+		#define COMPILER "unknown_compiler"
+	#endif
+#endif
+
+#if BOOST_ARCH_X86
+	#if BOOST_ARCH_X86_32
+		#define ARCHITECTURE "x32"
+	#elif BOOST_ARCH_X86_64
+		#define ARCHITECTURE "x64"
+	#else
+		#define ARCHITECTURE "unknown_arch"
+	#endif
+#elif BOOST_ARCH_ARM
+	#define ARCHITECTURE "arm"
+#else
+	#define ARCHITECTURE "unknown_arch"
+#endif
+	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << tolower(getenv("MODE")) << std::endl;
+}
 
 /*
 ////////// /////OS
@@ -90,78 +165,3 @@ BOOST_ARCH_X86_32
 BOOST_ARCH_X86_64
 BOOST_ARCH_Z
 */
-
-TEST(PublishTests, TestSync)
-{
-#if BOOST_OS_WINDOWS
-	#define OPERATIVE_SYSTEM "windows"
-#elif BOOST_OS_ANDROID
-	#define OPERATIVE_SYSTEM "android"
-#elif BOOST_OS_LINUX
-	#ifdef __GLIBC__
-		#define OPERATIVE_SYSTEM "linux_glibc" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-	#else
-		#define OPERATIVE_SYSTEM "linux"
-	#endif
-#elif BOOST_OS_MACOS
-	#define OPERATIVE_SYSTEM "macosx"
-#else
-	#define OPERATIVE_SYSTEM "unknown_so"
-#endif
-
-#if BOOST_OS_WINDOWS
-	#ifdef _MSC_VER
-		#if _MSC_VER == 1911
-			#define COMPILER "msvc2017"
-		#elif _MSC_VER == 1910
-			#define COMPILER "msvc2017"
-		#elif _MSC_VER == 1900
-			#define COMPILER "msvc2015"
-		#elif _MSC_VER == 1800
-			#define COMPILER "msvc2013"
-		#elif _MSC_VER == 1700
-			#define COMPILER "msvc2012"
-		#elif _MSC_VER == 1600
-			#define COMPILER "msvc2010"
-		#elif _MSC_VER == 1500
-			#define COMPILER "msvc2008"
-		#elif _MSC_VER == 1400
-			#define COMPILER "msvc2005"
-		#elif _MSC_VER == 1310
-			#define COMPILER "msvc2003"
-		#else
-			#define COMPILER "unknown_compiler"
-		#endif
-	#elif BOOST_COMP_GNUC
-		#define COMPILER "gcc"
-	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
-	#else
-		#define COMPILER "unknown_compiler"
-	#endif
-#else
-	#if BOOST_COMP_GNUC
-		#define COMPILER "gcc"
-	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
-	#else
-		#define COMPILER "unknown_compiler"
-	#endif
-#endif
-
-#if BOOST_ARCH_X86
-	#if BOOST_ARCH_X86_32
-		#define ARCHITECTURE "x32"
-	#elif BOOST_ARCH_X86_64
-		#define ARCHITECTURE "x64"
-	#else
-		#define ARCHITECTURE "unknown_arch"
-	#endif
-#elif BOOST_ARCH_ARM
-	#define ARCHITECTURE "arm"
-#else
-	#define ARCHITECTURE "unknown_arch"
-#endif
-	
-	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << getenv("MODE") << std::endl;
-}
