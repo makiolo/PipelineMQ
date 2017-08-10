@@ -7,12 +7,10 @@
 #include <boost/predef.h>
 #include <gmock/gmock.h>
 
-using testing::AtLeast;
-using testing::AnyNumber;
-using testing::_;
-
 #define PACKAGE "packagename"
 #define VERSION "1.0.0.0"
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
 
 class PublishTests : testing::Test { };
 
@@ -101,7 +99,7 @@ TEST(PublishTests, TestSync)
 	#define OPERATIVE_SYSTEM "android"
 #elif BOOST_OS_LINUX
 	#ifdef __GLIBC__
-		#define OPERATIVE_SYSTEM "linux_glibc" __GLIBC__ "." __GLIBC_MINOR__
+		#define OPERATIVE_SYSTEM "linux_glibc" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 	#else
 		#define OPERATIVE_SYSTEM "linux"
 	#endif
