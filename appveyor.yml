@@ -1,0 +1,20 @@
+version: 1.0.{build}
+
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+install:
+  - cmd: git submodule update --init --recursive
+  - cmd: pip install pyyaml
+  - cmd: pip install poster
+
+build_script:
+  - cmd: set || exit 0
+  - cmd: cd cmaki && git pull origin master && cd ..
+  - cmd: cd cmaki_generator && git pull origin master && cd ..
+  - cmd: .\cmaki\run.cmd
