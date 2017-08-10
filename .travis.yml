@@ -62,4 +62,4 @@ install:
   - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.sh)
 
 script:
-  - NOCODECOV=TRUE ./cmaki/run.sh
+  - NOCOVERAGE=TRUE ./cmaki/run.sh
