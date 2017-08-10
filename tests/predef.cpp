@@ -54,41 +54,49 @@ TEST(PublishTests, TestSync)
 	
 #if BOOST_OS_WINDOWS
 	#ifdef _MSC_VER
+		#define COMPILER "msvc"
 		#if _MSC_VER == 1911
-			#define COMPILER "msvc2017"
+			#define COMPILER_RESTRICTION "2017"
 		#elif _MSC_VER == 1910
-			#define COMPILER "msvc2017"
+			#define COMPILER_RESTRICTION "2017"
 		#elif _MSC_VER == 1900
-			#define COMPILER "msvc2015"
+			#define COMPILER_RESTRICTION "2015"
 		#elif _MSC_VER == 1800
-			#define COMPILER "msvc2013"
+			#define COMPILER_RESTRICTION "2013"
 		#elif _MSC_VER == 1700
-			#define COMPILER "msvc2012"
+			#define COMPILER_RESTRICTION "2012"
 		#elif _MSC_VER == 1600
-			#define COMPILER "msvc2010"
+			#define COMPILER_RESTRICTION "2010"
 		#elif _MSC_VER == 1500
-			#define COMPILER "msvc2008"
+			#define COMPILER_RESTRICTION "2008"
 		#elif _MSC_VER == 1400
-			#define COMPILER "msvc2005"
+			#define COMPILER_RESTRICTION "2005"
 		#elif _MSC_VER == 1310
-			#define COMPILER "msvc2003"
+			#define COMPILER_RESTRICTION "2003"
 		#else
 			#define COMPILER "unknown_compiler"
+			#define COMPILER_RESTRICTION ""
 		#endif
 	#elif BOOST_COMP_GNUC
-		#define COMPILER "gcc" STR(__GNUC__)
+		#define COMPILER "gcc"
+		#define COMPILER_RESTRICTION STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang" STR(__clang_major__)
+		#define COMPILER "clang"
+		#define COMPILER_RESTRICTION STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
+		#define COMPILER_RESTRICTION ""
 	#endif
 #else
 	#if BOOST_COMP_GNUC
-		#define COMPILER "gcc" STR(__GNUC__)
+		#define COMPILER "gcc"
+		#define COMPILER_RESTRICTION STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang" STR(__clang_major__)
+		#define COMPILER "clang"
+		#define COMPILER_RESTRICTION STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
+		#define COMPILER_RESTRICTION ""
 	#endif
 #endif
 
@@ -102,6 +110,7 @@ TEST(PublishTests, TestSync)
 			<< ARCHITECTURE 
 			<< "_" << OPERATIVE_RESTRICTION 
 			<< "-" << COMPILER 
+			<< "_" << COMPILER_RESTRICTION
 			<< "-" << build_mode 
 			<< std::endl;
 }
