@@ -26,7 +26,7 @@ TEST(PublishTests, TestSync)
 #elif BOOST_OS_LINUX
 	#define OPERATIVE_SYSTEM "linux"
 	#ifdef __GLIBC__
-		#define OPERATIVE_RESTRICTION "_glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
+		#define OPERATIVE_RESTRICTION "glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 	#else
 		#define OPERATIVE_RESTRICTION ""
 	#endif
@@ -38,6 +38,20 @@ TEST(PublishTests, TestSync)
 	#define OPERATIVE_RESTRICTION ""
 #endif
 
+#if BOOST_ARCH_X86
+	#if BOOST_ARCH_X86_32
+		#define ARCHITECTURE "32"
+	#elif BOOST_ARCH_X86_64
+		#define ARCHITECTURE "64"
+	#else
+		#define ARCHITECTURE "unknown_arch"
+	#endif
+#elif BOOST_ARCH_ARM
+	#define ARCHITECTURE "arm"
+#else
+	#define ARCHITECTURE "unknown_arch"
+#endif
+	
 #if BOOST_OS_WINDOWS
 	#ifdef _MSC_VER
 		#if _MSC_VER == 1911
@@ -62,35 +76,22 @@ TEST(PublishTests, TestSync)
 			#define COMPILER "unknown_compiler"
 		#endif
 	#elif BOOST_COMP_GNUC
-		#define COMPILER "gcc"
+		#define COMPILER "gcc" STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
+		#define COMPILER "clang" STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
 	#endif
 #else
 	#if BOOST_COMP_GNUC
-		#define COMPILER "gcc"
+		#define COMPILER "gcc" STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
+		#define COMPILER "clang" STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
 	#endif
 #endif
 
-#if BOOST_ARCH_X86
-	#if BOOST_ARCH_X86_32
-		#define ARCHITECTURE "32"
-	#elif BOOST_ARCH_X86_64
-		#define ARCHITECTURE "64"
-	#else
-		#define ARCHITECTURE "unknown_arch"
-	#endif
-#elif BOOST_ARCH_ARM
-	#define ARCHITECTURE "arm"
-#else
-	#define ARCHITECTURE "unknown_arch"
-#endif
 	// environment var MODE to lower
 	std::string build_mode(getenv("MODE")); 
 	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
