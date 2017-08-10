@@ -18,19 +18,24 @@ class PublishTests : testing::Test { };
 TEST(PublishTests, TestSync)
 {
 #if BOOST_OS_WINDOWS
-	#define OPERATIVE_SYSTEM "windows"
+	#define OPERATIVE_SYSTEM "win"
+	#define OPERATIVE_RESTRICTION ""
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
+	#define OPERATIVE_RESTRICTION ""
 #elif BOOST_OS_LINUX
+	#define OPERATIVE_SYSTEM "linux"
 	#ifdef __GLIBC__
-		#define OPERATIVE_SYSTEM "linux_glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
+		#define OPERATIVE_RESTRICTION "_glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 	#else
-		#define OPERATIVE_SYSTEM "linux"
+		#define OPERATIVE_RESTRICTION ""
 	#endif
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
+	#define OPERATIVE_RESTRICTION ""
 #else
 	#define OPERATIVE_SYSTEM "unknown_so"
+	#define OPERATIVE_RESTRICTION ""
 #endif
 
 #if BOOST_OS_WINDOWS
@@ -75,9 +80,9 @@ TEST(PublishTests, TestSync)
 
 #if BOOST_ARCH_X86
 	#if BOOST_ARCH_X86_32
-		#define ARCHITECTURE "x32"
+		#define ARCHITECTURE "32"
 	#elif BOOST_ARCH_X86_64
-		#define ARCHITECTURE "x64"
+		#define ARCHITECTURE "64"
 	#else
 		#define ARCHITECTURE "unknown_arch"
 	#endif
@@ -87,10 +92,17 @@ TEST(PublishTests, TestSync)
 	#define ARCHITECTURE "unknown_arch"
 #endif
 	// environment var MODE to lower
-	std::string data(getenv("MODE")); 
-	std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+	std::string build_mode(getenv("MODE")); 
+	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
 	// print uuid
-	std::cout << PACKAGE << "-" << VERSION << "-" << OPERATIVE_SYSTEM << "-" << ARCHITECTURE << "-" << COMPILER << "-" << data << std::endl;
+	std::cout 	<< PACKAGE
+			<< "-" << VERSION 
+			<< "-" << OPERATIVE_SYSTEM 
+			<< ARCHITECTURE 
+			<< "_" << OPERATIVE_RESTRICTION 
+			<< "-" << COMPILER 
+			<< "-" << build_mode 
+			<< std::endl;
 }
 
 /*
