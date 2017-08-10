@@ -11,8 +11,8 @@ using testing::AtLeast;
 using testing::AnyNumber;
 using testing::_;
 
-#define PACKAGE "boost"
-#define VERSION "1.64"
+#define PACKAGE "packagename"
+#define VERSION "1.0.0.0"
 
 class PublishTests : testing::Test { };
 
