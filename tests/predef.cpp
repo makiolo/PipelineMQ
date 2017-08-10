@@ -100,7 +100,11 @@ TEST(PublishTests, TestSync)
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
 #elif BOOST_OS_LINUX
-	#define OPERATIVE_SYSTEM "linux_glibc" ## __GLIBC__ ## "." ## __GLIBC_MINOR__
+	#ifdef __GLIBC__
+		#define OPERATIVE_SYSTEM "linux_glibc" __GLIBC__ "." __GLIBC_MINOR__
+	#else
+		#define OPERATIVE_SYSTEM "linux"
+	#endif
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
 #else
