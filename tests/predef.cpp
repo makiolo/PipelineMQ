@@ -96,24 +96,17 @@ BOOST_ARCH_Z
 TEST(PublishTests, TestSync)
 {
 #if BOOST_OS_WINDOWS
-	#if BOOST_ARCH_X86_32
-		#define OPERATIVE_SYSTEM "win32"
-	#elif BOOST_ARCH_X86_64
-		#define OPERATIVE_SYSTEM "win64"
-	#else
-		#define OPERATIVE_SYSTEM "unknown_so"
-	#endif
+	#define OPERATIVE_SYSTEM "windows"
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
 #elif BOOST_OS_LINUX
-	// use __GLIBC__ and __GLIBC_MINOR__ ? for detect binary compatibility
-	#define OPERATIVE_SYSTEM "linux"
+	#define OPERATIVE_SYSTEM "linux_glibc" ## __GLIBC__ ## "." ## __GLIBC_MINOR__
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
 #else
 	#define OPERATIVE_SYSTEM "unknown_so"
 #endif
-	
+
 #if BOOST_OS_WINDOWS
 	#ifdef _MSC_VER
 		#if _MSC_VER == 1911
@@ -154,9 +147,7 @@ TEST(PublishTests, TestSync)
 	#endif
 #endif
 
-#if BOOST_ARCH_ARM
-	#define ARCHITECTURE "arm"
-#elif BOOST_ARCH_X86
+#if BOOST_ARCH_X86
 	#if BOOST_ARCH_X86_32
 		#define ARCHITECTURE "x32"
 	#elif BOOST_ARCH_X86_64
@@ -164,6 +155,8 @@ TEST(PublishTests, TestSync)
 	#else
 		#define ARCHITECTURE "unknown_arch"
 	#endif
+#elif BOOST_ARCH_ARM
+	#define ARCHITECTURE "arm"
 #else
 	#define ARCHITECTURE "unknown_arch"
 #endif
