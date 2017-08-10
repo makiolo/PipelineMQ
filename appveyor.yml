@@ -15,6 +15,6 @@ install:
 
 build_script:
   - cmd: set || exit 0
-  - cmd: cd cmaki && git pull origin master && cd ..
-  - cmd: cd cmaki_generator && git pull origin master && cd ..
+  - cmd: git clone https://github.com/makiolo/cmaki.git
+  - cmd: git clone https://github.com/makiolo/cmaki_generator.git
   - cmd: .\cmaki\run.cmd
