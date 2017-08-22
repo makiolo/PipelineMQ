@@ -18,3 +18,4 @@ install:
 build_script:
   - cmd: call node_modules\cmaki\install.cmd
   - cmd: call node_modules\cmaki\tests.cmd
+
