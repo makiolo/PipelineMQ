@@ -16,20 +16,20 @@
 int main()
 {
 #if BOOST_OS_WINDOWS
-	#define OPERATIVE_SYSTEM "win"
+	#define OPERATIVE_SYSTEM "windows"
 	#define OPERATIVE_RESTRICTION ""
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
-	#define OPERATIVE_RESTRICTION "api_" STR(__ANDROID_API__)
+	#define OPERATIVE_RESTRICTION "_api_" STR(__ANDROID_API__)
 #elif BOOST_OS_LINUX
 	#define OPERATIVE_SYSTEM "linux"
 	#ifdef __GLIBC__
-		#define OPERATIVE_RESTRICTION "glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
+		#define OPERATIVE_RESTRICTION "_glibc_" STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 	#else
 		#define OPERATIVE_RESTRICTION ""
 	#endif
 #elif BOOST_OS_MACOS
-	#define OPERATIVE_SYSTEM "macosx"
+	#define OPERATIVE_SYSTEM "macos"
 	#define OPERATIVE_RESTRICTION ""
 #else
 	#define OPERATIVE_SYSTEM "unknown_so"
@@ -38,14 +38,14 @@ int main()
 
 #if BOOST_ARCH_X86
 	#if BOOST_ARCH_X86_32
-		#define ARCHITECTURE "32"
+		#define ARCHITECTURE "_32"
 	#elif BOOST_ARCH_X86_64
-		#define ARCHITECTURE "64"
+		#define ARCHITECTURE "_64"
 	#else
 		#define ARCHITECTURE "unknown_arch"
 	#endif
 #elif BOOST_ARCH_ARM
-	#define ARCHITECTURE "arm"
+	#define ARCHITECTURE "_arm"
 #else
 	#define ARCHITECTURE "unknown_arch"
 #endif
@@ -54,33 +54,33 @@ int main()
 	#ifdef _MSC_VER
 		#define COMPILER "msvc"
 		#if _MSC_VER == 1911
-			#define COMPILER_RESTRICTION "2017"
+			#define COMPILER_RESTRICTION "_2017"
 		#elif _MSC_VER == 1910
-			#define COMPILER_RESTRICTION "2017"
+			#define COMPILER_RESTRICTION "_2017"
 		#elif _MSC_VER == 1900
-			#define COMPILER_RESTRICTION "2015"
+			#define COMPILER_RESTRICTION "_2015"
 		#elif _MSC_VER == 1800
-			#define COMPILER_RESTRICTION "2013"
+			#define COMPILER_RESTRICTION "_2013"
 		#elif _MSC_VER == 1700
-			#define COMPILER_RESTRICTION "2012"
+			#define COMPILER_RESTRICTION "_2012"
 		#elif _MSC_VER == 1600
-			#define COMPILER_RESTRICTION "2010"
+			#define COMPILER_RESTRICTION "_2010"
 		#elif _MSC_VER == 1500
-			#define COMPILER_RESTRICTION "2008"
+			#define COMPILER_RESTRICTION "_2008"
 		#elif _MSC_VER == 1400
-			#define COMPILER_RESTRICTION "2005"
+			#define COMPILER_RESTRICTION "_2005"
 		#elif _MSC_VER == 1310
-			#define COMPILER_RESTRICTION "2003"
+			#define COMPILER_RESTRICTION "_2003"
 		#else
 			#define COMPILER "unknown_compiler"
 			#define COMPILER_RESTRICTION ""
 		#endif
 	#elif BOOST_COMP_GNUC
 		#define COMPILER "gcc"
-		#define COMPILER_RESTRICTION STR(__GNUC__)
+		#define COMPILER_RESTRICTION "_" STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
 		#define COMPILER "clang"
-		#define COMPILER_RESTRICTION STR(__clang_major__)
+		#define COMPILER_RESTRICTION "_" STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
 		#define COMPILER_RESTRICTION ""
@@ -88,10 +88,10 @@ int main()
 #else
 	#if BOOST_COMP_GNUC
 		#define COMPILER "gcc"
-		#define COMPILER_RESTRICTION STR(__GNUC__)
+		#define COMPILER_RESTRICTION "_" STR(__GNUC__)
 	#elif BOOST_COMP_CLANG
 		#define COMPILER "clang"
-		#define COMPILER_RESTRICTION STR(__clang_major__)
+		#define COMPILER_RESTRICTION "_" STR(__clang_major__)
 	#else
 		#define COMPILER "unknown_compiler"
 		#define COMPILER_RESTRICTION ""
@@ -102,13 +102,14 @@ int main()
 	std::string build_mode(getenv("MODE")); 
 	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
 	// print uuid
+	// packagename-1.0.0.0-win32_-msvc_2015-debug
 	std::cout 	<< PACKAGE
 			<< "-" << VERSION 
 			<< "-" << OPERATIVE_SYSTEM 
 			<< ARCHITECTURE 
-			<< "_" << OPERATIVE_RESTRICTION 
+			<< OPERATIVE_RESTRICTION 
 			<< "-" << COMPILER 
-			<< "_" << COMPILER_RESTRICTION
+			<< COMPILER_RESTRICTION
 			<< "-" << build_mode 
 			<< std::endl;
 }
