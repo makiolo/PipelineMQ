@@ -1,6 +1,4 @@
-# PipelineMQ
-
-Obsolete project.
+# identify your platform
 
 gcc 4.9 / clang 3.6: [![Build Status](https://travis-ci.org/makiolo/PipelineMQ.svg?branch=master)](https://travis-ci.org/makiolo/PipelineMQ)
 
