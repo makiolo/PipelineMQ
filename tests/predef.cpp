@@ -102,17 +102,20 @@ int main()
 	std::string build_mode(getenv("MODE")); 
 	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
 	// structure (5 chunks joined with "-"):
-	// 1. package (string package name replacing "-" with "_")
+	// 1. package (string but forbidden "-")
 	// 2. version (1-4 chunks joined with ".")
 	// 3. platform (2 or 3 chunks joined with "_")
-	// 	3.1. operative system
-	//	3.2. architecture
-	//	3.3. (optional) operative system restriction
+	// 	3.1. operative system (string but forbidden "_" and "-")
+	//	3.2. architecture (string but forbidden "_" and "-")
+	//	3.3. (optional) operative system restriction (is explanation and version joined with "_")
+	//		3.3.1. what is this restriction (string but forbidden "_" and "-")
+	//		3.3.2. version (1-4 chunks joined with ".") 
 	// 4. compiler (1 or 2 chunks joined with "_")
-	//	4.1. compiler
-	//	4.2. (optional) compiler restriction
+	//	4.1. compiler (string but forbidden "_" and "-")
+	//	4.2. (optional) compiler restriction (is version)
+	//		4.2.1. version (1-4 chunks joined with ".")
 	// 5. build mode (1 or 2 chunks joined with "_")
-	//	5.1. build_mode
+	//	5.1. build_mode (string but forbidden "_" and "-")
 	//	5.2. (optional) build mode restrictions
 	std::cout 	<< PACKAGE
 			<< "-" << VERSION 
