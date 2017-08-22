@@ -30,7 +30,7 @@ int main()
 	#endif
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
-	#define OPERATIVE_RESTRICTION "build_" STR(__apple_build_version__)
+	#define OPERATIVE_RESTRICTION ""
 #else
 	#define OPERATIVE_SYSTEM "unknown_so"
 	#define OPERATIVE_RESTRICTION ""
