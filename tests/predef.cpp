@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <boost/predef.h>
 
-#define PACKAGE "packagename"
-#define VERSION "1.0.0.0"
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
@@ -101,25 +99,21 @@ int main()
 	// environment var MODE to lower
 	std::string build_mode(getenv("MODE")); 
 	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
-	// structure (5 chunks joined with "-"):
-	// 1. package (string but forbidden "-")
-	// 2. version (1-4 chunks joined with ".")
-	// 3. platform (2 or 3 chunks joined with "_")
-	// 	3.1. operative system (string but forbidden "_" and "-")
-	//	3.2. architecture (string but forbidden "_" and "-")
-	//	3.3. (optional) operative system restriction (is explanation and version joined with "_")
-	//		3.3.1. what is this restriction (string but forbidden "_" and "-")
-	//		3.3.2. version (1-4 chunks joined with ".") 
-	// 4. compiler (1 or 2 chunks joined with "_")
-	//	4.1. compiler (string but forbidden "_" and "-")
-	//	4.2. (optional) compiler restriction (is version)
-	//		4.2.1. version (1-4 chunks joined with ".")
-	// 5. build mode (1 or 2 chunks joined with "_")
-	//	5.1. build_mode (string but forbidden "_" and "-")
-	//	5.2. (optional) build mode restrictions
-	std::cout 	<< PACKAGE
-			<< "-" << VERSION 
-			<< "-" << OPERATIVE_SYSTEM 
+	// structure (3 chunks joined with "-"):
+	// 1. platform (2 or 3 chunks joined with "_")
+	// 	1.1. operative system (string but forbidden "_" and "-")
+	//	1.2. architecture (string but forbidden "_" and "-")
+	//	1.3. (optional) operative system restriction (is explanation and version joined with "_")
+	//		1.3.1. what is this restriction (string but forbidden "_" and "-")
+	//		1.3.2. version (1-4 chunks joined with ".") 
+	// 2. compiler (1 or 2 chunks joined with "_")
+	//	2.1. compiler (string but forbidden "_" and "-")
+	//	2.2. (optional) compiler restriction (is version)
+	//		2.2.1. version (1-4 chunks joined with ".")
+	// 3. build mode (1 or 2 chunks joined with "_")
+	//	3.1. build_mode (string but forbidden "_" and "-")
+	//	3.2. (optional) build mode restrictions
+	std::cout 	<< "-" << OPERATIVE_SYSTEM 
 			<< ARCHITECTURE 
 			<< OPERATIVE_RESTRICTION 
 			<< "-" << COMPILER 
