@@ -11,7 +11,7 @@ configuration:
 install:
   - cmd: pip install pyyaml
   - cmd: pip install poster
-  - cmd: rmdir /s /q node_modules
+  - cmd: if exist node_modules (rmdir /s /q node_modules)
   - ps: $source = "https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.cmd"; $dest = $env:TEMP + "\bootstrap.cmd"; $WebClient = New-Object System.Net.WebClient; $WebClient.DownloadFile($source,$dest); Invoke-Expression $dest
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
 
