@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstring>
 #include <cctype>
+#include <algorithm>
 #include <boost/predef.h>
 
 #define PACKAGE "packagename"
