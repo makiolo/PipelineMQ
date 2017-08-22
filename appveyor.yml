@@ -17,7 +17,6 @@ build_script:
   - cmd: set || exit 0
   # TODO: use bootstrap.cmd
   - cmd: git clone https://github.com/makiolo/cmaki.git
-  - cmd: git clone https://github.com/makiolo/cmaki_generator.git
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
   - cmd: call cmaki\setup.cmd
   - cmd: call cmaki\compile.cmd
