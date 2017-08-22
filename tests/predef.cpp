@@ -20,7 +20,7 @@ int main()
 	#define OPERATIVE_RESTRICTION ""
 #elif BOOST_OS_ANDROID
 	#define OPERATIVE_SYSTEM "android"
-	#define OPERATIVE_RESTRICTION ""
+	#define OPERATIVE_RESTRICTION "api_" STR(__ANDROID_API__)
 #elif BOOST_OS_LINUX
 	#define OPERATIVE_SYSTEM "linux"
 	#ifdef __GLIBC__
@@ -30,7 +30,7 @@ int main()
 	#endif
 #elif BOOST_OS_MACOS
 	#define OPERATIVE_SYSTEM "macosx"
-	#define OPERATIVE_RESTRICTION ""
+	#define OPERATIVE_RESTRICTION "build_" STR(__apple_build_version__)
 #else
 	#define OPERATIVE_SYSTEM "unknown_so"
 	#define OPERATIVE_RESTRICTION ""
