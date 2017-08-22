@@ -101,8 +101,19 @@ int main()
 	// environment var MODE to lower
 	std::string build_mode(getenv("MODE")); 
 	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
-	// print uuid
-	// packagename-1.0.0.0-win32_-msvc_2015-debug
+	// structure (5 chunks joined with "-"):
+	// 1. package (string package name replacing "-" with "_")
+	// 2. version (1-4 chunks joined with ".")
+	// 3. platform (2 or 3 chunks joined with "_")
+	// 	3.1. operative system
+	//	3.2. architecture
+	//	3.3. (optional) operative system restriction
+	// 4. compiler (1 or 2 chunks joined with "_")
+	//	4.1. compiler
+	//	4.2. (optional) compiler restriction
+	// 5. build mode (1 or 2 chunks joined with "_")
+	//	5.1. build_mode
+	//	5.2. (optional) build mode restrictions
 	std::cout 	<< PACKAGE
 			<< "-" << VERSION 
 			<< "-" << OPERATIVE_SYSTEM 
