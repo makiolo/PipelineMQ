@@ -72,6 +72,7 @@ install:
   - pip install --user codecov
   - git clone https://github.com/boostorg/predef.git boostorg_predef
   - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.sh)
+  - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki_generator/master/bootstrap.sh)
 
 script:
   - ./node_modules/cmaki/install.sh
