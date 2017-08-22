@@ -17,4 +17,5 @@ build_script:
   - cmd: set || exit 0
   - cmd: git clone https://github.com/makiolo/cmaki.git
   - cmd: git clone https://github.com/makiolo/cmaki_generator.git
+  - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
   - cmd: .\cmaki\run.cmd
