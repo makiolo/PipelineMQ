@@ -113,7 +113,7 @@ int main()
 	// 3. build mode (1 or 2 chunks joined with "_")
 	//	3.1. build_mode (string but forbidden "_" and "-")
 	//	3.2. (optional) build mode restrictions
-	std::cout 	<< "-" << OPERATIVE_SYSTEM 
+	std::cout 	<< OPERATIVE_SYSTEM 
 			<< ARCHITECTURE 
 			<< OPERATIVE_RESTRICTION 
 			<< "-" << COMPILER 
