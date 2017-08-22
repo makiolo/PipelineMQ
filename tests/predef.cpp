@@ -6,16 +6,13 @@
 #include <cstring>
 #include <cctype>
 #include <boost/predef.h>
-#include <gmock/gmock.h>
 
 #define PACKAGE "packagename"
 #define VERSION "1.0.0.0"
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-class PublishTests : testing::Test { };
-
-TEST(PublishTests, TestSync)
+int main()
 {
 #if BOOST_OS_WINDOWS
 	#define OPERATIVE_SYSTEM "win"
