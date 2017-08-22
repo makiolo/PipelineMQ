@@ -75,5 +75,5 @@ install:
   - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki_generator/master/bootstrap.sh)
 
 script:
-  - ./node_modules/cmaki/install.sh
+  - CMAKI_PWD=$(pwd) ./node_modules/cmaki/install.sh
   - ./node_modules/cmaki/tests.sh
