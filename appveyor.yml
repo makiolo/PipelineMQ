@@ -15,9 +15,8 @@ install:
 
 build_script:
   - cmd: set || exit 0
-  # TODO: use bootstrap.cmd
-  - cmd: git clone https://github.com/makiolo/cmaki.git
+  - cmd: git clone https://github.com/makiolo/cmaki.git node_modules\cmaki
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
-  - cmd: call cmaki\setup.cmd
-  - cmd: call cmaki\compile.cmd
-  - cmd: call cmaki\tests.cmd
+  - cmd: call node_modules\cmaki\setup.cmd
+  - cmd: call node_modules\cmaki\compile.cmd
+  - cmd: call node_modules\cmaki\tests.cmd
