@@ -14,10 +14,7 @@ install:
   - cmd: pip install poster
 
 build_script:
-  - cmd: set || exit 0
   - ps: $source = "https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.cmd"; $dest = $env:TEMP + "\bootstrap.cmd"; $WebClient = New-Object System.Net.WebClient; $WebProxy = New-Object System.Net.WebProxy($env:http_proxy, $true); $WebClient.Proxy = $WebProxy; $WebClient.DownloadFile($source,$dest); Invoke-Expression $dest
-  - cmd: git clone https://github.com/makiolo/cmaki.git node_modules\cmaki
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
-  - cmd: call node_modules\cmaki\setup.cmd
-  - cmd: call node_modules\cmaki\compile.cmd
+  - cmd: call node_modules\cmaki\install.cmd
   - cmd: call node_modules\cmaki\tests.cmd
