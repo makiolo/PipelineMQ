@@ -11,11 +11,13 @@ configuration:
 install:
   - cmd: pip install pyyaml
   - cmd: pip install poster
-  - cmd: if exist node_modules (rmdir /s /q node_modules)
-  - ps: $source = "https://raw.githubusercontent.com/makiolo/cmaki/master/bootstrap.cmd"; $dest = $env:TEMP + "\bootstrap.cmd"; $WebClient = New-Object System.Net.WebClient; $WebClient.DownloadFile($source,$dest); Invoke-Expression $dest
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
 
 build_script:
-  - cmd: call node_modules\cmaki\install.cmd
-  - cmd: call node_modules\cmaki\tests.cmd
-
+  # download and execute "ci" script
+  - ps: >-
+    $source = "https://raw.githubusercontent.com/makiolo/cmaki/master/ci.cmd"
+    $dest = $env:TEMP + "\ci.cmd"
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile($source,$dest)
+    Invoke-Expression $dest
