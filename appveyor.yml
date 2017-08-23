@@ -9,12 +9,9 @@ configuration:
   - Release
 
 install:
-  - cmd: pip install pyyaml
-  - cmd: pip install poster
   - cmd: git clone https://github.com/boostorg/predef.git boostorg_predef
 
 build_script:
-  # download and execute "ci" script
   - ps: >-
     $source = "https://raw.githubusercontent.com/makiolo/cmaki/master/ci.cmd"
     $dest = $env:TEMP + "\ci.cmd"
