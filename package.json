@@ -1,0 +1,37 @@
+{
+  "name": "cmaki_identifier",
+  "version": "1.0.0",
+  "description": "identify your platform",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "ci": "cmaki ci",
+    "clean": "cmaki clean",
+    "setup": "cmaki setup",
+    "compile": "cmaki compile",
+	"preinstall": "git clone https://github.com/boostorg/predef.git boostorg_predef",
+    "install": "cmaki install",
+    "test": "cmaki tests",
+    "upload": "cmaki upload"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makiolo/cmaki_identifier.git"
+  },
+  "keywords": [
+    "c++",
+    "identifier"
+  ],
+  "author": "Ricardo Marmolejo García",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/makiolo/cmaki_identifier/issues"
+  },
+  "homepage": "https://github.com/makiolo/cmaki_identifier#readme",
+  "devDependencies": {
+    "cmaki": "github:makiolo/cmaki",
+    "cmaki_generator": "github:makiolo/cmaki_generator"
+  }
+}
