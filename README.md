@@ -1,8 +1,8 @@
 # identify your platform
 
-gcc 4.9 / clang 3.6: [![Build Status](https://travis-ci.org/makiolo/PipelineMQ.svg?branch=master)](https://travis-ci.org/makiolo/PipelineMQ)
+gcc 4.9 / clang 3.6: [![Build Status](https://travis-ci.org/makiolo/cmaki_identifier.svg?branch=master)](https://travis-ci.org/makiolo/cmaki_identifier)
 
-MSVC 2015: [![Build status](https://ci.appveyor.com/api/projects/status/0lfj3cc8693ib5er?svg=true)](https://ci.appveyor.com/project/makiolo/pipelinemq)
+MSVC 2015: [![Build status](https://ci.appveyor.com/api/projects/status/tljl8xip6m8joi86?svg=true)](https://ci.appveyor.com/project/makiolo/cmaki-identifier)
 
 ## travis:
 - linux_64_glibc_2.19-gcc_4-debug
