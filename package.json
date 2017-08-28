@@ -11,7 +11,7 @@
     "clean": "cmaki clean",
     "setup": "cmaki setup",
     "compile": "cmaki compile",
-	"preinstall": "git clone https://github.com/boostorg/predef.git boostorg_predef",
+    "preinstall": "git clone -q https://github.com/boostorg/predef.git boostorg_predef",
     "install": "cmaki install",
     "test": "cmaki tests",
     "upload": "cmaki upload"
