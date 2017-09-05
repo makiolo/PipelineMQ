@@ -1,6 +1,6 @@
-project(pipeline-mq CXX)
+project(cmaki_identifier CXX)
 cmake_minimum_required(VERSION 3.0)
-include("${CMAKE_CURRENT_LIST_DIR}/node_modules/cmaki/cmaki.cmake")
-cmaki_setup()
+# cmaki_setup()
+# poner c++14
 include_directories(boostorg_predef/include)
 add_subdirectory(tests)
