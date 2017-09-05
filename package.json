@@ -6,10 +6,6 @@
   "directories": {
     "test": "tests"
   },
-  "bin": {
-	"cmaki": "./cmaki.js",
-	"cmaki_identifier": "./bin/predef"
-  },
   "scripts": {
     "preinstall": "./install"
   },
