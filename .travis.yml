@@ -67,4 +67,6 @@ matrix:
       osx_image: xcode7.3
 
 script:
-  - bash <(curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/ci.sh)
+  - curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/setup.sh | CMAKI_INSTALL=$(pwd)/bin bash
+  - curl -s https://raw.githubusercontent.com/makiolo/cmaki/master/compile.sh | CMAKI_INSTALL=$(pwd)/bin bash
+

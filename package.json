@@ -6,15 +6,12 @@
   "directories": {
     "test": "tests"
   },
+  "bin": {
+	"cmaki": "./cmaki.js",
+	"cmaki_identifier": "./bin/predef"
+  },
   "scripts": {
-    "ci": "cmaki ci",
-    "clean": "cmaki clean",
-    "setup": "cmaki setup",
-    "compile": "cmaki compile",
-    "preinstall": "git clone -q https://github.com/boostorg/predef.git boostorg_predef",
-    "install": "cmaki install",
-    "test": "cmaki tests",
-    "upload": "cmaki upload"
+    "install": "./install"
   },
   "repository": {
     "type": "git",
@@ -29,9 +26,6 @@
   "bugs": {
     "url": "https://github.com/makiolo/cmaki_identifier/issues"
   },
-  "homepage": "https://github.com/makiolo/cmaki_identifier#readme",
-  "devDependencies": {
-    "cmaki": "github:makiolo/cmaki",
-    "cmaki_generator": "github:makiolo/cmaki_generator"
-  }
+  "homepage": "https://github.com/makiolo/cmaki_identifier#readme"
 }
+
