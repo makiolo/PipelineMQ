@@ -1,3 +1,3 @@
-add_executable(predef predef.cpp)
-install(TARGETS predef DESTINATION $ENV{CMAKI_INSTALL})
+add_executable(cmaki_identifier cmaki_identifier.cpp)
+install(TARGETS cmaki_identifier DESTINATION $ENV{CMAKI_INSTALL})
 
