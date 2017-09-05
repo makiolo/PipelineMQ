@@ -11,7 +11,7 @@
 	"cmaki_identifier": "./bin/predef"
   },
   "scripts": {
-    "install": "./install"
+    "preinstall": "./install"
   },
   "repository": {
     "type": "git",
