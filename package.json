@@ -2,7 +2,6 @@
   "name": "cmaki_identifier",
   "version": "1.0.0",
   "description": "identify your platform",
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
@@ -24,4 +23,3 @@
   },
   "homepage": "https://github.com/makiolo/cmaki_identifier#readme"
 }
-
