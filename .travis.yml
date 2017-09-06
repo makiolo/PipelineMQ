@@ -68,4 +68,3 @@ matrix:
 
 script:
   - CMAKI_PWD=$(pwd) npm install
-  - npm test
