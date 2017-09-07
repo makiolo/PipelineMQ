@@ -9,7 +9,7 @@
     "cmaki": "./cmaki.js"
   },
   "scripts": {
-    "preinstall": "./cmaki.js preinstall"
+    "install": "./cmaki.js preinstall"
   },
   "repository": {
     "type": "git",
