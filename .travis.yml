@@ -67,4 +67,5 @@ matrix:
       osx_image: xcode7.3
 
 script:
-  - CMAKI_PWD=$(pwd) npm install
+  - chmod +x cmaki.js
+  - npm install
