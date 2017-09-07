@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "bin": {
-    "cmaki": "./cmaki.js",
+    "cmaki": "./cmaki.js"
   },
   "scripts": {
     "preinstall": "cmaki preinstall"
