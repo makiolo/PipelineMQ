@@ -7,12 +7,12 @@ var exec = shelljs.exec;
 
 if(!process.env.CMAKI_PWD)
 {
-	shelljs.env['CMAKI_PWD'] = process.cwd();
+	// shelljs.env['CMAKI_PWD'] = process.cwd();
 	process.env['CMAKI_PWD'] = process.cwd();
 }
 if(!process.env.CMAKI_INSTALL)
 {
-	shelljs.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
+	// shelljs.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
 	process.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
 }
 
