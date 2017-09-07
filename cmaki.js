@@ -32,8 +32,7 @@ function trim(s)
 }
 
 var is_win = (os.platform() === 'win32');
-// var dir_script = path.dirname( process.argv[1] );
-var dir_script = __dirname;
+var dir_script = path.join(process.cwd(), '..', 'node_modules', 'cmaki');
 var script = process.argv[2];
 
 if (is_win)
