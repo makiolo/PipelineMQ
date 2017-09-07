@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/makiolo/cmaki_identifier/issues"
   },
-  "homepage": "https://github.com/makiolo/cmaki_identifier#readme"
+  "homepage": "https://github.com/makiolo/cmaki_identifier#readme",
+  "dependencies": {
+    "shelljs": "^0.7.8"
+  }
 }
