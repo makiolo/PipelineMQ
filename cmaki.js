@@ -32,8 +32,30 @@ function trim(s)
 }
 
 var is_win = (os.platform() === 'win32');
-var dir_script = path.join(process.cwd(), '..', 'node_modules', 'cmaki');
+var dir_script;
 var script = process.argv[2];
+if (is_win)
+{
+	if(fs.existsSync(path.join(__dirname, script+".cmd")))
+	{
+		dir_script = __dirname;
+	}
+	else
+	{
+		dir_script = path.join(process.cwd(), '..', 'node_modules', 'cmaki');
+	}
+}
+else
+{
+	if(fs.existsSync(path.join(__dirname, script+".sh")))
+	{
+		dir_script = __dirname;
+	}
+	else
+	{
+		dir_script = path.join(process.cwd(), '..', 'node_modules', 'cmaki');
+	}
+}
 
 if (is_win)
 {
