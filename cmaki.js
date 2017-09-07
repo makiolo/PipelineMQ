@@ -7,13 +7,23 @@ var exec = shelljs.exec;
 
 if(!process.env.CMAKI_PWD)
 {
-	shelljs.env['CMAKI_PWD'] = process.cwd();
-	process.env['CMAKI_PWD'] = process.cwd();
+	if (fs.existsSync(path.join("..", "..", "node_modules", "cmaki_identifier"))) {
+		shelljs.env['CMAKI_PWD'] = path.join(process.cwd(), '..', '..');
+		process.env['CMAKI_PWD'] = path.join(process.cwd(), '..', '..');
+	} else {
+		shelljs.env['CMAKI_PWD'] = path.join(process.cwd());
+		process.env['CMAKI_PWD'] = path.join(process.cwd());
+	}
 }
 if(!process.env.CMAKI_INSTALL)
 {
-	shelljs.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
-	process.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
+	if (fs.existsSync(path.join("..", "..", "node_modules", "cmaki_identifier"))) {
+		shelljs.env['CMAKI_INSTALL'] = path.join(process.cwd(), '..', '..', 'bin');
+		process.env['CMAKI_INSTALL'] = path.join(process.cwd(), '..', '..', 'bin');
+	} else {
+		shelljs.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
+		process.env['CMAKI_INSTALL'] = path.join(process.cwd(), 'bin');
+	}
 }
 
 function trim(s)
