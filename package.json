@@ -5,8 +5,11 @@
   "directories": {
     "test": "tests"
   },
+  "bin": {
+    "cmaki": "./cmaki.js",
+  },
   "scripts": {
-    "preinstall": "./preinstall"
+    "preinstall": "cmaki preinstall"
   },
   "repository": {
     "type": "git",
