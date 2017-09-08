@@ -5,11 +5,8 @@
   "directories": {
     "test": "tests"
   },
-  "bin": {
-    "cmaki": "./cmaki.js"
-  },
   "scripts": {
-    "install": "./cmaki.js preinstall"
+    "install": "cmaki preinstall"
   },
   "repository": {
     "type": "git",
@@ -26,9 +23,6 @@
   },
   "homepage": "https://github.com/makiolo/cmaki_identifier#readme",
   "devDependencies": {
-    "cmaki_scripts": "makiolo/cmaki_scripts",
-  },  
-  "dependencies": {
-    "shelljs": "^0.7.8"
+    "cmaki_scripts": "makiolo/cmaki_scripts"
   }
 }
