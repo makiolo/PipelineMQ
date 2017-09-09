@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "preinstall": "cmaki preinstall",
+    "install": "cmaki install",
     "postinstall": "cmaki postinstall"
   },
   "repository": {
