@@ -5,6 +5,6 @@ export CMAKI_INSTALL="${CMAKI_INSTALL:-$CMAKI_PWD/bin}"
 export CMAKI_EMULATOR="${CMAKI_EMULATOR:-}"
 
 echo -- detecting platform: 
-wine $CMAKI_INSTALL/cmaki_identifier.exe
+$CMAKI_PWD/node_modules/cmaki/ci/detect_operative_system.sh
 echo -- ok
 
