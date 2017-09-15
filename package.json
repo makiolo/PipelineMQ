@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "identify your platform",
   "directories": {
-    "test": "tests"
+    "test": "test"
   },
   "scripts": {
     "install": "cmaki install"
