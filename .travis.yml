@@ -72,6 +72,6 @@ script:
   - bin/cmaki_identifier
   - CMAKI_INFO=ALL bin/cmaki_identifier
   - CMAKI_INFO=ALL CMAKI_ENTROPY=coverage_version bin/cmaki_identifier
-  - CMAKI_INFO=SO bin/cmaki_identifier
+  - CMAKI_INFO=OS bin/cmaki_identifier
   - CMAKI_INFO=ARCH bin/cmaki_identifier
   - CMAKI_INFO=COMPILER bin/cmaki_identifier
