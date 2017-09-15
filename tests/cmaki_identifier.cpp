@@ -11,12 +11,19 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-std::string get_environment(const char* varname, const char* default_)
+template <typename T>
+std::string get_environment(T default_)
+{
+    return default_;
+}
+
+template <typename T, typename ... Args>
+std::string get_environment(T varname, Args ... others)
 {
 	char* varname_str = getenv(varname);
 	std::string value_str; 
 	if(varname_str == NULL)
-		value_str = default_;
+		value_str = get_environment(others...);
 	else
 		value_str = varname_str;
 	return value_str;
