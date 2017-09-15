@@ -1,18 +1,28 @@
 add_executable(cmaki_identifier cmaki_identifier.cpp)
 install(TARGETS cmaki_identifier DESTINATION $ENV{CMAKI_INSTALL})
+install(FILES ../cmaki_identifier.cmake DESTINATION $ENV{CMAKI_INSTALL})
+install(PROGRAMS ../cmaki_identifier.sh DESTINATION $ENV{CMAKI_INSTALL})
 add_test(
-    NAME cmaki_identifier_test_all
-    COMMAND CMAKI_INFO=ALL $ENV{CMAKI_INSTALL}/cmaki_identifier
-    WORKING_DIRECTORY $ENV{CMAKI_INSTALL})
+	NAME all
+	COMMAND cmaki_identifier
+	WORKING_DIRECTORY $ENV{CMAKI_INSTALL}
+	)
 add_test(
-    NAME cmaki_identifier_test_so
-    COMMAND CMAKI_INFO=SO $ENV{CMAKI_INSTALL}/cmaki_identifier
-    WORKING_DIRECTORY $ENV{CMAKI_INSTALL})
+	NAME os
+	COMMAND cmaki_identifier
+	WORKING_DIRECTORY $ENV{CMAKI_INSTALL}
+	)
 add_test(
-    NAME cmaki_identifier_test_arch
-    COMMAND CMAKI_INFO=ARCH $ENV{CMAKI_INSTALL}/cmaki_identifier
-    WORKING_DIRECTORY $ENV{CMAKI_INSTALL})
+	NAME arch
+	COMMAND cmaki_identifier
+	WORKING_DIRECTORY $ENV{CMAKI_INSTALL}
+	)
 add_test(
-    NAME cmaki_identifier_test_compiler
-    COMMAND CMAKI_INFO=COMPILER $ENV{CMAKI_INSTALL}/cmaki_identifier
-    WORKING_DIRECTORY $ENV{CMAKI_INSTALL})
+	NAME compiler
+	COMMAND cmaki_identifier
+	WORKING_DIRECTORY $ENV{CMAKI_INSTALL}
+	)
+set_tests_properties(os PROPERTIES ENVIRONMENT "CMAKI_INFO=OS")
+set_tests_properties(arch PROPERTIES ENVIRONMENT "CMAKI_INFO=ARCH")
+set_tests_properties(compiler PROPERTIES ENVIRONMENT "CMAKI_INFO=COMPILER")
+
