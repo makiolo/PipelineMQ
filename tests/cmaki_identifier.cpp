@@ -181,7 +181,7 @@ int main()
 #elif BOOST_COMP_BORLAND
 	#define COMPILER "borland"
 	#define COMPILER_RESTRICTION ""
-#elif BOOST_COMP_COMO Comeau C++
+#elif BOOST_COMP_COMO
 	#define COMPILER "comeau"
 	#define COMPILER_RESTRICTION ""
 #elif BOOST_COMP_DEC
