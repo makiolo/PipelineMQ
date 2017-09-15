@@ -6,7 +6,8 @@
     "test": "test"
   },
   "scripts": {
-    "install": "cmaki install"
+    "install": "cmaki install",
+    "test": "cmaki test"
   },
   "repository": {
     "type": "git",
