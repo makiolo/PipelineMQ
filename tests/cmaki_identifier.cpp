@@ -287,7 +287,7 @@ int main()
 	// Arquitectura, sólo el numero: 32 o 64
 	// Compilador: COMPILER + COMPILER_RESTRICTION
 	// Todo: OPERATIVE_SYSTEM + "_" + ARCHITECTURE + OPERATIVE_RESTRICTION + "-" + COMPILER + COMPILER_RESTRICTION + "-" + build_mode + cmaki_entropy
-	if(cmaki_info == "SO")
+	if(cmaki_info == "OS")
 	{
 		std::cout 	<< OPERATIVE_SYSTEM 
 				<< std::endl;
