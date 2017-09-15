@@ -149,84 +149,117 @@ int main()
 	#define ARCHITECTURE "unknown_arch"
 #endif
 	
-#if BOOST_OS_WINDOWS
-	#ifdef _MSC_VER
-		#define COMPILER "msvc"
-		#if _MSC_VER == 1911
-			#define COMPILER_RESTRICTION "_2017"
-		#elif _MSC_VER == 1910
-			#define COMPILER_RESTRICTION "_2017"
-		#elif _MSC_VER == 1900
-			#define COMPILER_RESTRICTION "_2015"
-		#elif _MSC_VER == 1800
-			#define COMPILER_RESTRICTION "_2013"
-		#elif _MSC_VER == 1700
-			#define COMPILER_RESTRICTION "_2012"
-		#elif _MSC_VER == 1600
-			#define COMPILER_RESTRICTION "_2010"
-		#elif _MSC_VER == 1500
-			#define COMPILER_RESTRICTION "_2008"
-		#elif _MSC_VER == 1400
-			#define COMPILER_RESTRICTION "_2005"
-		#elif _MSC_VER == 1310
-			#define COMPILER_RESTRICTION "_2003"
-		#else
-			#define COMPILER "unknown_compiler"
-			#define COMPILER_RESTRICTION ""
-		#endif
-	#elif BOOST_COMP_GNUC
-		#define COMPILER "gcc"
-		#define COMPILER_RESTRICTION "_" STR(__GNUC__)
-	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
-		#define COMPILER_RESTRICTION "_" STR(__clang_major__)
+#if BOOST_COMP_MSVC
+	#define COMPILER "msvc"
+	#if _MSC_VER == 1911
+		#define COMPILER_RESTRICTION "_2017"
+	#elif _MSC_VER == 1910
+		#define COMPILER_RESTRICTION "_2017"
+	#elif _MSC_VER == 1900
+		#define COMPILER_RESTRICTION "_2015"
+	#elif _MSC_VER == 1800
+		#define COMPILER_RESTRICTION "_2013"
+	#elif _MSC_VER == 1700
+		#define COMPILER_RESTRICTION "_2012"
+	#elif _MSC_VER == 1600
+		#define COMPILER_RESTRICTION "_2010"
+	#elif _MSC_VER == 1500
+		#define COMPILER_RESTRICTION "_2008"
+	#elif _MSC_VER == 1400
+		#define COMPILER_RESTRICTION "_2005"
+	#elif _MSC_VER == 1310
+		#define COMPILER_RESTRICTION "_2003"
 	#else
-		#define COMPILER "unknown_compiler"
-		#define COMPILER_RESTRICTION ""
+		#define COMPILER_RESTRICTION "_msc_ver_" STR(_MSC_VER)
 	#endif
+#elif BOOST_COMP_GNUC
+	#define COMPILER "gcc"
+	#define COMPILER_RESTRICTION "_" STR(__GNUC__)
+#elif BOOST_COMP_CLANG
+	#define COMPILER "clang"
+	#define COMPILER_RESTRICTION "_" STR(__clang_major__)
+#elif BOOST_COMP_BORLAND
+	#define COMPILER "borland"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_COMO Comeau C++
+	#define COMPILER "comeau"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_DEC
+	#define COMPILER "dec"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_DIAB
+	#define COMPILER "diab"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_DMC
+	#define COMPILER "dmc"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_SYSC
+	#define COMPILER "sysc"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_EDG
+	#define COMPILER "edg"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_PATH
+	#define COMPILER "path"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_GCCXML
+	#define COMPILER "gccxml"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_GHS
+	#define COMPILER "ghs"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_HPACC
+	#define COMPILER "hpacc"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_IAR
+	#define COMPILER "iar"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_IBM
+	#define COMPILER "ibm"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_INTEL
+	#define COMPILER "intel"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_KCC
+	#define COMPILER "kcc"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_LLVM
+	#define COMPILER "llvm"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_HIGHC
+	#define COMPILER "highc"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_MWERKS
+	#define COMPILER "mwerks"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_MRI
+	#define COMPILER "mri"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_MPW
+	#define COMPILER "mrw"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_PALM
+	#define COMPILER "palm"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_PGI
+	#define COMPILER "pgi"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_SGI
+	#define COMPILER "sgi"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_SUNPRO
+	#define COMPILER "sunpro"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_TENDRA
+	#define COMPILER "tendra"
+	#define COMPILER_RESTRICTION ""
+#elif BOOST_COMP_WATCOM
+	#define COMPILER "watcom"
+	#define COMPILER_RESTRICTION ""
 #else
-	#if BOOST_COMP_GNUC
-		#define COMPILER "gcc"
-		#define COMPILER_RESTRICTION "_" STR(__GNUC__)
-	#elif BOOST_COMP_CLANG
-		#define COMPILER "clang"
-		#define COMPILER_RESTRICTION "_" STR(__clang_major__)
-	#else
-		#define COMPILER "unknown_compiler"
-		#define COMPILER_RESTRICTION ""
-	#endif
+	#define COMPILER "unknown_compiler"
+	#define COMPILER_RESTRICTION ""
 #endif
-/*
-BOOST_COMP_BORLAND
-BOOST_COMP_CLANG
-BOOST_COMP_COMO Comeau C++
-BOOST_COMP_DEC
-BOOST_COMP_DIAB
-BOOST_COMP_DMC
-BOOST_COMP_SYSC
-BOOST_COMP_EDG
-BOOST_COMP_PATH
-BOOST_COMP_GNUC
-BOOST_COMP_GCCXML
-BOOST_COMP_GHS
-BOOST_COMP_HPACC
-BOOST_COMP_IAR
-BOOST_COMP_IBM
-BOOST_COMP_INTEL
-BOOST_COMP_KCC
-BOOST_COMP_LLVM
-BOOST_COMP_HIGHC
-BOOST_COMP_MWERKS
-BOOST_COMP_MRI
-BOOST_COMP_MPW
-BOOST_COMP_PALM
-BOOST_COMP_PGI
-BOOST_COMP_SGI
-BOOST_COMP_SUNPRO
-BOOST_COMP_TENDRA
-BOOST_COMP_MSVC
-BOOST_COMP_WATCOM
-*/
 	
 	// structure (3 chunks joined with "-"):
 	// 1. platform (2 or 3 chunks joined with "_")
