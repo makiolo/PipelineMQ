@@ -68,4 +68,8 @@ matrix:
 
 script:
   - npm install
-  - npm test
+  # - npm test
+  - CMAKI_INFO=ALL bin/cmaki_identifier
+  - CMAKI_INFO=SO bin/cmaki_identifier
+  - CMAKI_INFO=ARCH bin/cmaki_identifier
+  - CMAKI_INFO=COMPILER bin/cmaki_identifier
