@@ -157,7 +157,7 @@ int main()
 				<< "-" << COMPILER 
 				<< COMPILER_RESTRICTION
 				<< "-" << build_mode 
-				<< cmaki_entropy;
+				<< cmaki_entropy
 				<< std::endl;
 	}
 }
