@@ -11,6 +11,17 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
+std::string get_environment(const char* varname, const char* default)
+{
+	char* varname_str = getenv(varname);
+	std::string value_str; 
+	if(varname_str == NULL)
+		value_str = default;
+	else
+		value_str = varname_str;
+	return value_str;
+}
+
 int main()
 {
 #if BOOST_OS_WINDOWS
@@ -36,14 +47,14 @@ int main()
 
 #if BOOST_ARCH_X86
 	#if BOOST_ARCH_X86_32
-		#define ARCHITECTURE "_32"
+		#define ARCHITECTURE "32"
 	#elif BOOST_ARCH_X86_64
-		#define ARCHITECTURE "_64"
+		#define ARCHITECTURE "64"
 	#else
 		#define ARCHITECTURE "unknown_arch"
 	#endif
 #elif BOOST_ARCH_ARM
-	#define ARCHITECTURE "_arm"
+	#define ARCHITECTURE "arm"
 #else
 	#define ARCHITECTURE "unknown_arch"
 #endif
@@ -95,10 +106,7 @@ int main()
 		#define COMPILER_RESTRICTION ""
 	#endif
 #endif
-
-	// environment var MODE to lower
-	std::string build_mode(getenv("MODE")); 
-	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
+	
 	// structure (3 chunks joined with "-"):
 	// 1. platform (2 or 3 chunks joined with "_")
 	// 	1.1. operative system (string but forbidden "_" and "-")
@@ -113,13 +121,45 @@ int main()
 	// 3. build mode (1 or 2 chunks joined with "_")
 	//	3.1. build_mode (string but forbidden "_" and "-")
 	//	3.2. (optional) build mode restrictions
-	std::cout 	<< OPERATIVE_SYSTEM 
-			<< ARCHITECTURE 
-			<< OPERATIVE_RESTRICTION 
-			<< "-" << COMPILER 
-			<< COMPILER_RESTRICTION
-			<< "-" << build_mode 
-			<< std::endl;
+	
+	std::string build_mode = get_environment("MODE", "Debug");
+	std::string cmaki_entropy = get_environment("CMAKI_ENTROPY", "");
+	std::string cmaki_info = get_environment("CMAKI_INFO", "ALL");
+	
+	std::transform(build_mode.begin(), build_mode.end(), build_mode.begin(), ::tolower);
+	std::transform(cmaki_entropy.begin(), cmaki_entropy.end(), cmaki_entropy.begin(), ::tolower);
+	
+	// TODO: mas consultas
+	// Arquitectura, sólo el numero: 32 o 64
+	// Compilador: COMPILER + COMPILER_RESTRICTION
+	// Todo: OPERATIVE_SYSTEM + "_" + ARCHITECTURE + OPERATIVE_RESTRICTION + "-" + COMPILER + COMPILER_RESTRICTION + "-" + build_mode + cmaki_entropy
+	if(cmaki_info == "SO")
+	{
+		std::cout 	<< OPERATIVE_SYSTEM 
+				<< std::endl;
+	}
+	else if(cmaki_info == "ARCH")
+	{
+		std::cout 	<< ARCHITECTURE 
+				<< std::endl;
+	}
+	else if(cmaki_info == "COMPILER")
+	{
+		std::cout 	<< COMPILER 
+				<< COMPILER_RESTRICTION
+				<< std::endl;
+	}
+	else // if(cmaki_info == "ALL")
+	{
+		std::cout 	<< OPERATIVE_SYSTEM 
+				<< "_" << ARCHITECTURE 
+				<< OPERATIVE_RESTRICTION 
+				<< "-" << COMPILER 
+				<< COMPILER_RESTRICTION
+				<< "-" << build_mode 
+				<< cmaki_entropy;
+				<< std::endl;
+	}
 }
 
 /*
