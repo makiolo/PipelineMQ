@@ -310,8 +310,11 @@ int main()
 				<< OPERATIVE_RESTRICTION 
 				<< "-" << COMPILER 
 				<< COMPILER_RESTRICTION
-				<< "-" << build_mode 
-				<< cmaki_entropy
-				<< std::endl;
+				<< "-" << build_mode;
+		if(cmaki_entropy.length() > 0)
+		{
+			std::cout << "-" << cmaki_entropy;
+		}
+		std::cout << std::endl;
 	}
 }
