@@ -1,4 +1,8 @@
 add_executable(cmaki_identifier cmaki_identifier.cpp)
+
+# android need them ?
+target_link_libraries(cmaki_identifier stdc++)
+
 install(TARGETS cmaki_identifier DESTINATION $ENV{CMAKI_INSTALL})
 install(FILES ../cmaki_identifier.cmake DESTINATION $ENV{CMAKI_INSTALL})
 install(PROGRAMS ../cmaki_identifier.sh DESTINATION $ENV{CMAKI_INSTALL})
