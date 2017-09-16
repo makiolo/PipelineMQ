@@ -11,6 +11,8 @@ if [[ "$WINEARCH" = "win32" ]]; then
 	wine $CMAKI_INSTALL/cmaki_identifier.exe
 elif [[ "$WINEARCH" = "win64" ]]; then
 	wine $CMAKI_INSTALL/cmaki_identifier.exe
+elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
+	qemu-arm $CMAKI_INSTALL/cmaki_identifier
 else
 	$CMAKI_EMULATOR $CMAKI_INSTALL/cmaki_identifier
 fi
