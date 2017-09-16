@@ -1,7 +1,6 @@
-add_executable(cmaki_identifier cmaki_identifier.cpp)
+set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
-# android need them ?
-target_link_libraries(cmaki_identifier stdc++)
+add_executable(cmaki_identifier cmaki_identifier.cpp)
 
 install(TARGETS cmaki_identifier DESTINATION $ENV{CMAKI_INSTALL})
 install(FILES ../cmaki_identifier.cmake DESTINATION $ENV{CMAKI_INSTALL})
