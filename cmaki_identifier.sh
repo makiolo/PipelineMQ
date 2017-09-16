@@ -14,6 +14,8 @@ elif [[ "$WINEARCH" = "win64" ]]; then
 elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
 	unset LD_LIBRARY_PATH
 	qemu-arm -L /usr/arm-linux-gnueabi $CMAKI_INSTALL/cmaki_identifier
+elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
+	nodejs $CMAKI_INSTALL/cmaki_identifier.js
 else
 	$CMAKI_EMULATOR $CMAKI_INSTALL/cmaki_identifier
 fi
