@@ -31,7 +31,10 @@ std::string get_environment(T varname, Args ... others)
 
 int main()
 {
-#if BOOST_OS_WINDOWS
+#ifdef __EMSCRIPTEN__
+	#define OPERATIVE_SYSTEM "javascript"
+	#define OPERATIVE_RESTRICTION ""
+#elif BOOST_OS_WINDOWS
 	#define OPERATIVE_SYSTEM "windows"
 	#define OPERATIVE_RESTRICTION ""
 #elif BOOST_OS_ANDROID
