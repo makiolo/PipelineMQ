@@ -1,4 +1,6 @@
-set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+	set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
+endif()
 
 add_executable(cmaki_identifier cmaki_identifier.cpp)
 
