@@ -8,6 +8,10 @@
 #include <algorithm>
 #include <boost/predef.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
