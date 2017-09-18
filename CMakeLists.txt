@@ -5,5 +5,6 @@ include_directories(boostorg_predef/include)
 enable_testing()
 MESSAGE("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 MESSAGE("CMAKE_CURRENT_BINARY_DIR = ${CMAKE_CURRENT_BINARY_DIR}")
+MESSAGE("CMAKI_INSTALL = $ENV{CMAKI_INSTALL}")
 add_subdirectory(tests)
 
