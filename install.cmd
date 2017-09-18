@@ -18,6 +18,6 @@ curl -s https://raw.githubusercontent.com/makiolo/cmaki_scripts/master/setup.cmd
 call __setup.cmd
 del __setup.cmd
 
-curl -s https://raw.githubusercontent.com/makiolo/cmaki_scripts/master/compile.cmd > __compile.md
+curl -s https://raw.githubusercontent.com/makiolo/cmaki_scripts/master/compile.cmd > __compile.cmd
 call __compile.cmd
 del __compile.cmd
