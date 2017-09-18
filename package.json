@@ -6,7 +6,6 @@
     "test": "test"
   },
   "scripts": {
-    "preinstall": "./preinstall.sh",
     "install": "cmaki setup && cmaki compile",
     "test": "cmaki test"
   },
