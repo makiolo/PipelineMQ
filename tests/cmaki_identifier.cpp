@@ -15,6 +15,22 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
+#ifdef _WIN32
+
+// problems with variadic in windows
+std::string get_environment(std::string varname, std::string default_)
+{
+	char* varname_str = getenv(varname);
+	std::string value_str; 
+	if(varname_str == NULL)
+		value_str = default_;
+	else
+		value_str = varname_str;
+	return value_str;
+}
+
+#else
+
 template <typename T>
 std::string get_environment(T default_)
 {
@@ -32,6 +48,8 @@ std::string get_environment(T varname, Args ... others)
 		value_str = varname_str;
 	return value_str;
 }
+
+#endif
 
 int main()
 {
