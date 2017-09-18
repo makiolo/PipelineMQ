@@ -18,7 +18,7 @@
 #ifdef _WIN32
 
 // problems with variadic in windows
-std::string get_environment(std::string varname, std::string default_)
+std::string get_environment(const char* varname, const char* default_)
 {
 	char* varname_str = getenv(varname);
 	std::string value_str; 
