@@ -2,9 +2,6 @@
   "name": "cmaki_identifier",
   "version": "1.0.0",
   "description": "identify your platform",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "install": "cmaki setup && cmaki compile",
     "test": "cmaki test"
