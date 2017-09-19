@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/makiolo/cmaki_identifier#readme",
   "devDependencies": {
-    "cmaki_scripts": "makiolo/cmaki_scripts"
+    "cmaki_scripts": "git+https://github.com/makiolo/cmaki_scripts.git"
   }
 }
