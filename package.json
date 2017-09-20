@@ -8,8 +8,7 @@
     "clean": "cmaki clean",
     "setup": "cmaki setup",
     "compile": "cmaki compile",
-    "preinstall": "cmaki setup && cmaki compile",
-    "install": "echo ok",
+    "install": "cmaki setup && cmaki compile",
     "test": "cmaki test",
     "upload": "cmaki upload"
   },
