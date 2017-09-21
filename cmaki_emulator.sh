@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ $# -e 0 ]; then
-    echo $0: [ERROR], usage: ./cmaki_emulator.sh <program>
-    exit 1
-fi
+# if [ $# -e 0 ]; then
+#     echo $0: [ERROR], usage: ./cmaki_emulator.sh <program>
+#     exit 1
+# fi
 
 export DIRPROGRAM="$( cd "$( dirname "$1" )" && pwd )"
 export CMAKI_PWD="${CMAKI_PWD:-$DIRPROGRAM}/.."
