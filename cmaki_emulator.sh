@@ -7,7 +7,7 @@
 
 export _DIRNAMEPROGRAM=$(dirname "$1")
 export DIRPROGRAM="$( cd "$_DIRNAMEPROGRAM" && pwd )"
-export CMAKI_PWD="${CMAKI_PWD:-$(pwd)"
+export CMAKI_PWD="${CMAKI_PWD:-$(pwd)}"
 export CMAKI_INSTALL="${CMAKI_INSTALL:-$CMAKI_PWD/bin}"
 export CMAKI_EMULATOR="${CMAKI_EMULATOR:-}"
 
