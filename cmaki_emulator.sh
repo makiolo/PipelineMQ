@@ -11,13 +11,13 @@ export BASENAMEPROGRAM=$(basename "$1")
 export CMAKI_PWD="${CMAKI_PWD:-$(pwd)}"
 export CMAKI_INSTALL="${CMAKI_INSTALL:-$CMAKI_PWD/bin}"
 export CMAKI_EMULATOR="${CMAKI_EMULATOR:-}"
-
-echo "DIRPROGRAM = $DIRPROGRAM"
-echo "CMAKI_PWD = $CMAKI_PWD"
-echo "CMAKI_INSTALL = $CMAKI_INSTALL"
-echo "CMAKI_EMULATOR = $CMAKI_EMULATOR"
-echo "BASENAMEPROGRAM = $BASENAMEPROGRAM"
-
+# 
+# echo "DIRPROGRAM = $DIRPROGRAM"
+# echo "CMAKI_PWD = $CMAKI_PWD"
+# echo "CMAKI_INSTALL = $CMAKI_INSTALL"
+# echo "CMAKI_EMULATOR = $CMAKI_EMULATOR"
+# echo "BASENAMEPROGRAM = $BASENAMEPROGRAM"
+# 
 cd $DIRPROGRAM
 if [[ "$WINEARCH" = "win32" ]]; then
 	wine ./$BASENAMEPROGRAM.exe "${@:2}"
@@ -29,6 +29,5 @@ elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
 elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
 	nodejs ./$BASENAMEPROGRAM.js "${@:2}"
 else
-	echo $CMAKI_EMULATOR $BASENAMEPROGRAM "${@:2}"
 	$CMAKI_EMULATOR ./$BASENAMEPROGRAM "${@:2}"
 fi
