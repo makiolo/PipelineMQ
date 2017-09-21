@@ -7,18 +7,4 @@ export CMAKI_PWD="${CMAKI_PWD:-$DIRSCRIPT}/.."
 export CMAKI_INSTALL="${CMAKI_INSTALL:-$CMAKI_PWD/bin}"
 export CMAKI_EMULATOR="${CMAKI_EMULATOR:-}"
 
-if [[ "$WINEARCH" = "win32" ]]; then
-	wine $CMAKI_INSTALL/cmaki_identifier.exe
-elif [[ "$WINEARCH" = "win64" ]]; then
-	wine $CMAKI_INSTALL/cmaki_identifier.exe
-elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
-	unset LD_LIBRARY_PATH
-	qemu-arm -L /usr/arm-linux-gnueabi $CMAKI_INSTALL/cmaki_identifier
-elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
-	# (cd $CMAKI_INSTALL && cat cmaki_identifier.js)
-	# (cd $CMAKI_INSTALL && find .)
-	(cd $CMAKI_INSTALL && /usr/bin/nodejs $CMAKI_INSTALL/cmaki_identifier.js)
-else
-	$CMAKI_EMULATOR $CMAKI_INSTALL/cmaki_identifier
-fi
-
+$DIRSCRIPT/cmaki_emulator.sh $CMAKI_INSTALL/cmaki_identifier
