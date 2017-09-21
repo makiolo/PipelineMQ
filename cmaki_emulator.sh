@@ -20,15 +20,15 @@ echo "BASENAMEPROGRAM = $BASENAMEPROGRAM"
 
 cd $DIRPROGRAM
 if [[ "$WINEARCH" = "win32" ]]; then
-	wine $BASENAMEPROGRAM.exe "${@:2}"
+	wine ./$BASENAMEPROGRAM.exe "${@:2}"
 elif [[ "$WINEARCH" = "win64" ]]; then
-	wine $BASENAMEPROGRAM.exe "${@:2}"
+	wine ./$BASENAMEPROGRAM.exe "${@:2}"
 elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
 	unset LD_LIBRARY_PATH
-	qemu-arm -L /usr/arm-linux-gnueabi $BASENAMEPROGRAM "${@:2}"
+	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
 elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
-	nodejs $BASENAMEPROGRAM.js "${@:2}"
+	nodejs ./$BASENAMEPROGRAM.js "${@:2}"
 else
 	echo $CMAKI_EMULATOR $BASENAMEPROGRAM "${@:2}"
-	$CMAKI_EMULATOR $BASENAMEPROGRAM "${@:2}"
+	$CMAKI_EMULATOR ./$BASENAMEPROGRAM "${@:2}"
 fi
