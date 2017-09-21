@@ -16,15 +16,17 @@ echo "CMAKI_PWD = $CMAKI_PWD"
 echo "CMAKI_INSTALL = $CMAKI_INSTALL"
 echo "CMAKI_EMULATOR = $CMAKI_EMULATOR"
 
+shift
 if [[ "$WINEARCH" = "win32" ]]; then
-	wine $PROGRAM.exe "${@:2}"
+	wine $PROGRAM.exe "$@"
 elif [[ "$WINEARCH" = "win64" ]]; then
-	wine $PROGRAM.exe "${@:2}"
+	wine $PROGRAM.exe "$@"
 elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
 	unset LD_LIBRARY_PATH
-	qemu-arm -L /usr/arm-linux-gnueabi $PROGRAM "${@:2}"
+	qemu-arm -L /usr/arm-linux-gnueabi $PROGRAM "$@"
 elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
-	nodejs $PROGRAM.js "${@:2}"
+	nodejs $PROGRAM.js "$@"
 else
-	$CMAKI_EMULATOR $PROGRAM "${@:2}"
+	echo $CMAKI_EMULATOR $PROGRAM "$@"
+	$CMAKI_EMULATOR $PROGRAM "$@"
 fi
