@@ -19,14 +19,17 @@ export CMAKI_EMULATOR="${CMAKI_EMULATOR:-}"
 # echo "BASENAMEPROGRAM = $BASENAMEPROGRAM"
 # 
 cd $DIRPROGRAM
-if [[ "$WINEARCH" = "win32" ]]; then
+if [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/windows-x86" ]]; then
 	wine ./$BASENAMEPROGRAM "${@:2}"
-elif [[ "$WINEARCH" = "win64" ]]; then
+elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/windows-x64" ]]; then
 	wine ./$BASENAMEPROGRAM "${@:2}"
-elif [[ "$ANDROID_NDK_REVISION" = "13b" ]]; then
+elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/android-arm" ]]; then
 	unset LD_LIBRARY_PATH
 	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
-elif [[ "$EMSDK" = "/emsdk_portable" ]]; then
+elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/linux-armv6" ]]; then
+	unset LD_LIBRARY_PATH
+	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
+elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/browser-asmjs" ]]; then
 	nodejs ./$BASENAMEPROGRAM "${@:2}"
 else
 	$CMAKI_EMULATOR ./$BASENAMEPROGRAM "${@:2}"
