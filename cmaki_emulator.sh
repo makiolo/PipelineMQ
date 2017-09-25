@@ -28,7 +28,7 @@ elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/android-arm" ]]; then
 	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
 elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/linux-armv6" ]]; then
 	unset LD_LIBRARY_PATH
-	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
+	qemu-arm -L /usr/arm-linux-gnueabihf ./$BASENAMEPROGRAM "${@:2}"
 elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/browser-asmjs" ]]; then
 	nodejs ./$BASENAMEPROGRAM "${@:2}"
 else
