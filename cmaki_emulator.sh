@@ -28,6 +28,8 @@ elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/android-arm" ]]; then
 	qemu-arm -L /usr/arm-linux-gnueabi ./$BASENAMEPROGRAM "${@:2}"
 elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/linux-armv6" ]]; then
 	qemu-arm ./$BASENAMEPROGRAM "${@:2}"
+elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/linux-armv7" ]]; then
+	qemu-arm ./$BASENAMEPROGRAM "${@:2}"
 elif [[ "$DEFAULT_DOCKCROSS_IMAGE" = "dockcross/browser-asmjs" ]]; then
 	nodejs ./$BASENAMEPROGRAM "${@:2}"
 else
